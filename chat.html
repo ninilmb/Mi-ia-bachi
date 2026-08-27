@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduIA - Chat Tutor</title>
+    <style>
+        :root {
+            --bg-principal: #f0f4f8;
+            --azul-oscuro: #1e293b;
+            --azul-aesthetic: #64748b;
+            --azul-electrico: #3b82f6;
+            --azul-pastel: #dbeafe;
+            --blanco: #ffffff;
+            --sombra: rgba(148, 163, 184, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            color: var(--azul-oscuro);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--blanco);
+            padding: 15px 20px;
+            box-shadow: 0 4px 12px var(--sombra);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-volver {
+            background-color: var(--azul-pastel);
+            color: var(--azul-electrico);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        header h2 { font-size: 1.2rem; color: var(--azul-oscuro); }
+
+        .chat-container {
+            flex: 1;
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+            background-color: var(--blanco);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px var(--sombra);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(219, 234, 254, 0.5);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 75%;
+            padding: 12px 18px;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .message.bot {
+            background-color: var(--bg-principal);
+            color: var(--azul-oscuro);
+            align-self: flex-start;
+            border-top-left-radius: 4px;
+        }
+
+        .message.user {
+            background-color: var(--azul-electrico);
+            color: var(--blanco);
+            align-self: flex-end;
+            border-top-right-radius: 4px;
+        }
+
+        .chat-input-area {
+            padding: 15px 20px;
+            background-color: var(--bg-principal);
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid rgba(219, 234, 254, 0.7);
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 12px;
+            outline: none;
+            font-size: 0.95rem;
+            background-color: var(--blanco);
+        }
+
+        .chat-input-area button {
+            background-color: var(--azul-oscuro);
+            color: var(--blanco);
+            border: none;
+            padding: 0 22px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="btn-volver">← Volver</a>
+        <h2 id="titulo-asignatura">Cargando Tutor...</h2>
+        <div style="width: 70px;"></div>
+    </header>
+
+    <div class="chat-container">
+        <div class="chat-messages" id="chatBox"></div>
+        <div class="chat-input-area">
+            <input type="text" id="userInput" placeholder="Pregúntame una duda sobre esta materia..." onkeypress="detectarEnter(event)">
+            <button onclick="enviarMensaje()">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        const nombresAsignaturas = {
+            'mates': '📊 Matemáticas CCSS', 'quimica': '🧪 Química', 'biologia': '🧬 Biología',
+            'psicologia': '🧠 Psicología', 'castellano': '📚 Castellano y Lit.', 'catalan': '📖 Catalán y Lit.',
+            'ingles': '🇬🇧 Inglés', 'historia-espana': '🏰 Historia de España', 'filosofia': '🏛️ Filosofía'
+        };
+
+        const respuestasIA = {
+            'mates': {
+                'derivada': 'Una derivada es la velocidad a la que cambia algo. Imagina medir la rapidez con la que se llena una piscina en un segundo exacto.',
+                'matriz': 'Una matriz es como una tabla de Excel organizada con filas y columnas llena de números para hacer cálculos rápidos.',
+                'default': '¡Buena pregunta de Mates! Intenta preguntarme sobre "derivada" o "matriz" mientras sigo añadiendo temario.'
+            },
+            'quimica': {
+                'atomo': 'El átomo es la pieza de LEGO de la que está hecho todo. Tiene un núcleo al centro y electrones girando alrededor.',
+                'enlace': 'Un enlace químico es un apretón de manos fuerte entre dos átomos para unirse y estar más estables juntos.',
+                'default': '¡Interesante duda de Química! Prueba a preguntarme qué es un "atomo" o un "enlace" por ahora.'
+            },
+            'filosofia': {
+                'platon': 'Platón decía que vivimos en un mundo de sombras (físico) pero que la verdadera realidad son las Ideas perfectas que están en otro mundo.',
+                'kant': 'Kant inventó el "imperativo categórico": actúa siempre de una forma en la que te gustaría que todo el mundo actuara.',
+                'default': '¡Qué gran dilema filosófico! Pregúntame sobre "Platón" o "Kant" para ver cómo te lo explico fácil.'
+            }
+        };
+
+        const asignaturaActiva = localStorage.getItem('asignaturaActiva') || 'mates';
+        document.getElementById('titulo-asignatura').textContent = nombresAsignaturas[asignaturaActiva] || 'Tutor de IA';
+
+        const chatBox = document.getElementById('chatBox');
+        const userInput = document.getElementById('userInput');
+
+        function bienvenida() {
+            agregarGlobo('¡Hola! Soy tu tutor de IA. Dime tus dudas sobre esta materia y te las explicaré de forma súper breve y fácil.', 'bot');
+        }
+
+        function agregarGlobo(texto, emisor) {
+            const globo = document.createElement('div');
+            globo.classList.add('message', emisor);
+            globo.textContent = texto;
+            chatBox.appendChild(globo);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function enviarMensaje() {
+            const textoUsuario = userInput.value.trim();
+            if (textoUsuario === '') return;
+
+            agregarGlobo(textoUsuario, 'user');
+            userInput.value = '';
+
+            setTimeout(() => {
+                const textoLimpio = textoUsuario.toLowerCase();
+                let respuesta = '';
+                const baseMateria = respuestasIA[asignaturaActiva] || { 'default': 'Aún estoy aprendiendo sobre esta materia en particular, ¡pronto sabré responderte todo!' };
+                
+                let encontrada = false;
+                for (let clave in baseMateria) {
+                    if (textoLimpio.includes(clave) && clave !== 'default') {
+                        respuesta = baseMateria[clave];
+                        encontrada = true;
+                        break;
+                    }
+                }
+                if (!encontrada) respuesta = baseMateria['default'];
+                agregarGlobo(respuesta, 'bot');
+            }, 800);
+        }
+
+        function detectarEnter(event) { if (event.key === 'Enter') enviarMensaje(); }
+        bienvenida();
+    </script>
+</body>
+</html>
