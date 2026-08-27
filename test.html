@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduIA - Tests y Práctica</title>
+    <style>
+        :root {
+            --bg-principal: #f0f4f8;
+            --azul-oscuro: #1e293b;
+            --azul-aesthetic: #64748b;
+            --azul-electrico: #3b82f6;
+            --azul-pastel: #dbeafe;
+            --blanco: #ffffff;
+            --sombra: rgba(148, 163, 184, 0.15);
+            --verde: #10b981;
+            --rojo: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            color: var(--azul-oscuro);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--blanco);
+            padding: 15px 20px;
+            box-shadow: 0 4px 12px var(--sombra);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto 20px auto;
+        }
+
+        .btn-volver {
+            background-color: var(--azul-pastel);
+            color: var(--azul-electrico);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: var(--blanco);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px var(--sombra);
+            padding: 30px;
+            border: 1px solid rgba(219, 234, 254, 0.5);
+        }
+
+        .config-box {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--azul-oscuro);
+        }
+
+        select {
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            background-color: var(--bg-principal);
+            color: var(--azul-oscuro);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .btn-empezar {
+            background-color: var(--azul-electrico);
+            color: var(--blanco);
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .zona-pregunta {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .pregunta-texto {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .opciones-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .opcion-btn {
+            background-color: var(--bg-principal);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            padding: 14px;
+            border-radius: 12px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .opcion-btn:hover {
+            background-color: var(--azul-pastel);
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: none;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            font-size: 1rem;
+            outline: none;
+            resize: none;
+            margin-bottom: 15px;
+        }
+
+        .btn-enviar-redaccion {
+            background-color: var(--azul-oscuro);
+            color: var(--blanco);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="btn-volver">← Volver</a>
+        <h2 id="titulo-asignatura">Cargando Módulo...</h2>
+        <div style="width: 70px;"></div>
+    </header>
+
+    <div class="container">
+        <div class="config-box" id="configBox">
+            <h3>Configura tu práctica</h3>
+            <p style="color: var(--azul-aesthetic); font-size: 0.95rem;">Elige qué quieres repasar hoy.</p>
+            
+            <label for="selectTema">Selecciona el tema:</label>
+            <select id="selectTema"></select>
+
+            <label for="selectTipo">Tipo de ejercicio:</label>
+            <select id="selectTipo">
+                <option value="test">Preguntas Tipo Test (Opción Múltiple)</option>
+                <option value="redactar">Preguntas para Redactar y Desarrollar</option>
+            </select>
+
+            <button class="btn-empezar" onclick="comenzarPractica()">Empezar Práctica ✨</button>
+        </div>
+
+        <div class="zona-pregunta" id="zonaPregunta">
+            <div class="pregunta-texto" id="textoPregunta">Aquí va la pregunta</div>
+            
+            <div class="opciones-list" id="contenedorTest"></div>
+
+            <div id="contenedorRedactar" style="display: none;">
+                <textarea id="respuestaUsuario" placeholder="Escribe aquí tu respuesta desarrollada con tus propias palabras..."></textarea>
+                <button class="btn-enviar-redaccion" onclick="corregirRedaccion()">Entregar Respuesta</button>
+            </div>
+
+            <div class="feedback" id="feedbackBox"></div>
+        </div>
+    </div>
+
+    <script>
+        const nombresAsignaturas = {
+            'mates': '📊 Matemáticas CCSS', 'quimica': '🧪 Química', 'biologia': '🧬 Biología',
+            'psicologia': '🧠 Psicología', 'castellano': '📚 Castellano y Lit.', 'catalan': '📖 Catalán y Lit.',
+            'ingles': '🇬🇧 Inglés', 'historia-espana': '🏰 Historia de España', 'filosofia': '🏛️ Filosofía'
+        };
+
+        const bancoPreguntas = {
+            'mates': {
+                temas: ['Matrices', 'Derivadas'],
+                test: { 'Matrices': { q: '¿Qué condición deben cumplir dos matrices para poder sumarse?', alt: ['Tener el mismo número de filas y columnas', 'Que sean cuadradas', 'Que una sea mayor que otra'], correcta: 0, ex: 'Para sumar matrices, deben tener las mismas dimensiones.' } },
+                redactar: { 'Matrices': { q: 'Explica qué es una matriz identidad.', modelo: 'Es una matriz cuadrada con 1 en la diagonal y 0 en el resto.', puntos: ['Matriz cuadrada', 'Unos en diagonal'] } }
+            },
+            'quimica': {
+                temas: ['Estructura Atómica', 'Enlaces Químicos'],
+                test: { 'Estructura Atómica': { q: '¿Qué partículas están en el núcleo de un átomo?', alt: ['Electrones y Protones', 'Protones y Neutrones', 'Solo Electrones'], correcta: 1, ex: 'El núcleo contiene protones y neutrones.' } },
+                redactar: { 'Estructura Atómica': { q: 'Diferencia entre enlace covalente e iónico.', modelo: 'Covalente comparte electrones, iónico los cede o gana.', puntos: ['Compartir electrones', 'Ceder electrones'] } }
+            },
+            'filosofia': {
+                temas: ['Platón', 'Immanuel Kant'],
+                test: { 'Platón': { q: '¿Dónde están las verdades perfectas para Platón?', alt: ['Mundo Sensible', 'Mundo de las Ideas', 'Mundo Terrenal'], correcta: 1, ex: 'Las ideas perfectas habitan en el Mundo de las Ideas.' } },
+                redactar: { 'Platón': { q: 'Explica el Mito de la Caverna.', modelo: 'Las sombras representan la ignorancia y la salida el conocimiento verdadero.', puntos: ['Sombras = Ignorancia', 'Luz = Conocimiento'] } }
+            }
+        };
+
+        const asignaturaActiva = localStorage.getItem('asignaturaActiva') || 'mates';
+        document.getElementById('titulo-asignatura').textContent = nombresAsignaturas[asignaturaActiva] || 'Módulo de Práctica';
+
+        const selectTema = document.getElementById('selectTema');
+        const infoMateria = bancoPreguntas[asignaturaActiva] || { temas: ['General'] };
+        
+        infoMateria.temas.forEach(tema => {
+            let opt = document.createElement('option');
+            opt.value = tema;
+            opt.textContent = tema;
+            selectTema.appendChild(opt);
+        });
+
+        let temaSeleccionado, tipoSeleccionado, preguntaActual;
+
+        function comenzarPractica() {
+            temaSeleccionado = selectTema.value;
+            tipoSeleccionado = document.getElementById('selectTipo').value;
+
+            document.getElementById('configBox').style.display = 'none';
+            document.getElementById('zonaPregunta').style.display = 'block';
+
+            const materiaData = bancoPreguntas[asignaturaActiva];
+            
+            if (!materiaData || !materiaData[tipoSeleccionado] || !materiaData[tipoSeleccionado][temaSeleccionado]) {
+                document.getElementById('textoPregunta').textContent = "¡Módulo en preparación! Pronto añadiremos preguntas para este tema.";
+                return;
+            }
+
+            preguntaActual = materiaData[tipoSeleccionado][temaSeleccionado];
+            document.getElementById('textoPregunta').textContent = preguntaActual.q;
+
+            if (tipoSeleccionado === 'test') {
+                document.getElementById('contenedorTest').style.display = 'flex';
+                document.getElementById('contenedorRedactar').style.display = 'none';
+                generarOpcionesTest();
+            } else {
