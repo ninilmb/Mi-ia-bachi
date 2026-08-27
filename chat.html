@@ -3,32 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduIA - Chat</title>
+    <title>EduIA - Cozy Chat</title>
     <style>
         :root {
-            --bg: #f0f4f8; --text: #1e293b; --sub: #64748b;
-            --blue: #3b82f6; --pastel: #dbeafe; --white: #ffffff;
+            --bg-principal: #fff9e6; --rosa-pastel: #ffe3e8; --rosa-fuerte: #ff8fa3;
+            --amarillo-pastel: #fff0b3; --texto-cozy: #4a3e4d; --blanco: #ffffff;
+            --sombra-soft: rgba(255, 143, 163, 0.12);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, sans-serif; }
-        body { background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; }
-        header { background: var(--white); padding: 15px; box-shadow: 0 4px 12px rgba(148,163,184,0.15); display: flex; justify-content: space-between; align-items: center; }
-        .btn-volver { background: var(--pastel); color: var(--blue); border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }
-        .chat-container { flex: 1; max-width: 800px; width: 100%; margin: 15px auto; background: var(--white); border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(219,234,254,0.5); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', system-ui, sans-serif; }
+        body { background: var(--bg-principal); color: var(--texto-cozy); height: 100vh; display: flex; flex-direction: column; padding: 15px; }
+        header { background: var(--blanco); padding: 15px; border-radius: 18px; box-shadow: 0 6px 15px var(--sombra-soft); display: flex; justify-content: space-between; align-items: center; border: 2px solid var(--rosa-pastel); }
+        .btn-volver { background: var(--rosa-pastel); color: var(--rosa-fuerte); border: none; padding: 8px 16px; border-radius: 12px; font-weight: 700; text-decoration: none; font-size: 0.9rem; }
+        header h2 { font-size: 1.2rem; font-weight: 800; }
+        .chat-container { flex: 1; max-width: 800px; width: 100%; margin: 15px auto; background: var(--blanco); border-radius: 25px; display: flex; flex-direction: column; overflow: hidden; border: 2px solid var(--rosa-pastel); box-shadow: 0 10px 25px var(--sombra-soft); }
         .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
-        .message { max-width: 75%; padding: 12px 18px; border-radius: 16px; font-size: 0.95rem; line-height: 1.5; white-space: pre-line; }
-        .message.bot { background: var(--bg); color: var(--text); align-self: flex-start; border-top-left-radius: 4px; }
-        .message.user { background: var(--blue); color: var(--white); align-self: flex-end; border-top-right-radius: 4px; }
-        .img-preview-chat { max-width: 180px; border-radius: 10px; margin-top: 5px; display: block; }
-        .chat-input-area { padding: 15px; background: var(--bg); display: flex; align-items: center; gap: 10px; }
-        .btn-camara { background: var(--pastel); color: var(--blue); width: 45px; height: 45px; border-radius: 12px; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .chat-input-area input[type="text"] { flex: 1; padding: 14px; border: 1px solid rgba(148,163,184,0.3); border-radius: 12px; outline: none; background: var(--white); }
-        .btn-enviar { background: var(--text); color: var(--white); border: none; padding: 14px 22px; border-radius: 12px; font-weight: 600; cursor: pointer; }
+        .message { max-width: 75%; padding: 12px 18px; border-radius: 18px; font-size: 0.95rem; line-height: 1.5; white-space: pre-line; font-weight: 600; }
+        .message.bot { background: var(--bg-principal); color: var(--texto-cozy); align-self: flex-start; border-top-left-radius: 4px; }
+        .message.user { background: var(--rosa-fuerte); color: var(--blanco); align-self: flex-end; border-top-right-radius: 4px; }
+        .img-preview-chat { max-width: 180px; border-radius: 12px; margin-top: 5px; display: block; border: 2px solid var(--rosa-pastel); }
+        .chat-input-area { padding: 15px; background: var(--bg-principal); display: flex; align-items: center; gap: 10px; border-top: 2px solid var(--rosa-pastel); }
+        .btn-camara { background: var(--rosa-pastel); color: var(--rosa-fuerte); width: 45px; height: 45px; border-radius: 14px; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .chat-input-area input[type="text"] { flex: 1; padding: 14px; border: 2px solid var(--rosa-pastel); border-radius: 14px; outline: none; background: var(--blanco); color: var(--texto-cozy); font-weight: 600; }
+        .btn-enviar { background: var(--rosa-fuerte); color: var(--blanco); border: none; padding: 14px 22px; border-radius: 14px; font-weight: 700; cursor: pointer; }
     </style>
 </head>
 <body>
     <header>
         <a href="index.html" class="btn-volver">← Volver</a>
-        <h2 id="titulo-asignatura">Tutor</h2>
+        <h2 id="titulo-asignatura">Tutor Cozy</h2>
         <div style="width: 70px;"></div>
     </header>
     <div class="chat-container">
@@ -36,30 +38,65 @@
         <div class="chat-input-area">
             <label class="btn-camara" for="fileInput">📸</label>
             <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="procesarFoto(event)">
-            <input type="text" id="userInput" placeholder="Pregúntame o sube una foto..." onkeypress="detectarEnter(event)">
+            <input type="text" id="userInput" placeholder="Escribe aquí tu duda o sube una foto..." onkeypress="detectarEnter(event)">
             <button class="btn-enviar" onclick="enviarMensaje()">Enviar</button>
         </div>
     </div>
     <script>
-        const nombres = { 'mates': '📊 Matemáticas CCSS', 'quimica': '🧪 Química', 'biologia': '🧬 Biología', 'psicologia': '🧠 Psicología', 'castellano': '📚 Castellano', 'catalan': '📖 Catalán', 'ingles': '🇬🇧 Inglés', 'historia-espana': '🏰 Historia', 'filosofia': '🏛️ Filosofía' };
+        const nombres = { 'mates': '📊 Matemáticas CCSS', 'quimica': '🧪 Química', 'biologia': '🧬 Biología', 'psicologia': '🧠 Psicología', 'castellano': '📚 Castellano y Lit.', 'catalan': '📖 Catalán y Lit.', 'ingles': '🇬🇧 Inglés', 'historia-espana': '🏰 Historia de España', 'filosofia': '🏛️ Filosofía' };
         const saludos = [
             "¡Hola! Qué alegría tenerte por aquí. Vamos a darle caña al estudio relajados. ¿Qué vemos hoy? ✨",
             "¡Buenas! Menudo mérito tienes hincando los codos. Cuéntame tu duda y la resolvemos sin dramas. 🤝",
             "¡Hola, hola! Ponte cómodo/a en tu zona de estudio. ¿Qué te está costando más? 🚀"
         ];
+
+        // BASE DE CONOCIMIENTO PARA LAS 9 ASIGNATURAS DE BACHILLERATO
         const respuestasIA = {
             'mates': {
                 'derivada': "¡Las derivadas son clave! Indican la rapidez con la que cambia una función en un punto concreto.\n\n📌 *Regla básica:* Si tienes x², su derivada es 2x. ¡Solo bajas el exponente multiplicando!",
-                'matriz': "Una matriz es una caja organizada con filas y columnas llena de números. Piensa en ella como una tabla de datos inteligente.\n\n📌 *Para Selectividad:* Te pedirán calcular la Inversa (A⁻¹) o usar el Método de Cramer. ¡Es muy mecánico!",
-                'probabilidad': "Mide las opciones de que algo ocurra.\n\n📌 *Truco:* Aplica la Regla de Laplace (Casos favorables / Casos posibles). Si te cuesta ver el problema, haz un diagrama de árbol.",
-                'estadistica': "Se centra en intervalos de confianza.\n\n📌 *Secreto:* Usa la fórmula de Zα/2 para el nivel de confianza y opera con cuidado en la calculadora.",
-                'limite': "Un límite es ver a qué valor se acerca una función. Si te da una indeterminación como 0/0, ¡aplica la Regla de L'Hôpital derivando arriba y abajo!",
-                'default': "¡Gran duda matemática! Domino derivadas, matrices, límites, probabilidad y estadística. ¿Cuál de estos repasamos de forma amigable hoy?"
+                'matriz': "Una matriz es una caja organizada con filas y columnas llena de números.\n\n📌 *Para Selectividad:* Te pedirán calcular la Inversa (A⁻¹) o usar el Método de Cramer. ¡Es muy mecánico!",
+                'probabilidad': "Mide las opciones de que algo ocurra.\n\n📌 *Truco:* Aplica la Regla de Laplace (Casos favorables / Casos posibles). Haz un diagrama de árbol si te cuesta visualizarlo.",
+                'default': "¡Gran duda matemática! Pregúntame sobre 'derivada', 'matriz' o 'probabilidad' para que te lo explique de forma súper clara."
             },
             'quimica': {
-                'atomo': 'El átomo es la pieza fundamental de la materia. Tiene un núcleo positivo en el centro y electrones orbitando alrededor.',
-                'enlace': 'Un enlace es la unión entre átomos para conseguir estabilidad química.',
+                'atomo': 'El átomo es la pieza fundamental de la materia. Tiene un núcleo positivo (protones y neutrones) en el centro y electrones orbitando alrededor.',
+                'enlace': 'Un enlace es la unión entre átomos. En el covalente comparten electrones y en el iónico uno le cede electrones al otro.',
                 'default': "¡Buena duda de Química! Puedes preguntarme sobre el 'atomo' o los 'enlaces' químicos por ahora."
+            },
+            'biologia': {
+                'celula': 'La célula es la unidad de vida más pequeña. Las eucariotas tienen núcleo organizado (como las nuestras) y las procariotas tienen el ADN suelto (bacterias).',
+                'mitosis': 'Es el proceso por el cual una célula madre se divide para dar dos células hijas exactamente iguales. ¡Es clave para crecer y reparar tejidos!',
+                'default': "¡La Biología es preciosa! Pregúntame cosas sobre la 'celula' o la 'mitosis' para empezar."
+            },
+            'psicologia': {
+                'conductismo': 'Teoría que dice que la psicología debe estudiar solo lo que se ve: la conducta. Su lema es que a cada Estímulo le sigue una Respuesta (como los perros de Pavlov).',
+                'freud': 'Sigmund Freud es el padre del psicoanálisis. Decía que nuestra mente es como un iceberg y que lo más importante está oculto en el "Inconsciente".',
+                'default': "¡Qué gran tema de Psicología! Prueba a preguntarme sobre el 'conductismo' o sobre 'Freud'."
+            },
+            'castellano': {
+                'sintaxis': 'El truco para analizar oraciones es buscar siempre primero el verbo. Pregúntale "¿Quién hace la acción?" para encontrar el Sujeto, y todo lo demás será el Predicado.',
+                'quijote': 'Escrito por Miguel de Cervantes en 1605, es la obra cumbre de nuestra literatura. Es una parodia de las novelas de caballerías que inauguró la novela moderna.',
+                'default': "¡Me encanta la Lengua! Puedes preguntarme trucos de 'sintaxis' o sobre literatura como 'El Quijote'."
+            },
+            'catalan': {
+                'pronoms': "Els pronoms febles serveixen per substituir coses i no repetir-les.\n\n📌 *Truco:* CD determinat s'en va amb 'el, la, els, les' i el CD indeterminat es substitueix per 'en'.",
+                'renaixenca': 'Moviment cultural del segle XIX que va servir para recuperar el català com a llengua de cultura i literatura després de segles de decadència.',
+                'default': "¡Parlem en català! Pregunta'm sobre els 'pronoms' o la 'Renaixença'."
+            },
+            'ingles': {
+                'passive': "La voz pasiva se usa cuando importa más el objeto que quien hace la acción.\n\n📌 *Fórmula:* Objeto + Verbo TO BE (en el tiempo correspondiente) + Verbo principal en Participio.",
+                'conditionals': "Hay 4 tipos. El First Conditional se usa para el futuro (If + Present Simple, will + infinitivo). El Second Conditional es para hipótesis (If + Past Simple, would + infinitivo).",
+                'default': "Let's practice English! Ask me about 'passive' voice or 'conditionals'."
+            },
+            'historia-espana': {
+                '1812': 'La Pepa es la primera Constitución española, creada en Cádiz en plena Guerra de la Independencia. Era súper liberal para su época: limitaba el poder del rey y daba derechos al ciudadano.',
+                'guerra civil': 'Conflicto armado (1936-1939) que comenzó tras el golpe de Estado contra la Segunda República, dando paso a la larga dictadura del general Francisco Franco.',
+                'default': "¡La Historia de España tiene mucha miga! Pregúntame sobre la Constitución de '1812' o la 'guerra civil'."
+            },
+            'filosofia': {
+                'platon': 'Platón decía que este mundo físico es solo un reflejo borroso (Mundo Sensible) de un mundo perfecto e intangible donde habitan las verdaderas realidades (Mundo de las Ideas).',
+                'kant': 'Kant creó el "imperativo categórico": una norma moral que dice que debes actuar siempre pensando si te gustaría que tu acción se convirtiera en una ley universal.',
+                'default': "¡Pensar nos hace libres! Pregúntame sobre 'Platon' o 'Kant' para explicártelo de forma humana."
             }
         };
 
@@ -69,41 +106,3 @@
         const userInput = document.getElementById('userInput');
 
         function globo(txt, emisor) {
-            const g = document.createElement('div'); g.classList.add('message', emisor); g.textContent = txt;
-            chatBox.appendChild(g); chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        function procesarFoto(e) {
-            const file = e.target.files[0]; if (!file) return;
-            const r = new FileReader();
-            r.onload = function(evt) {
-                const gUser = document.createElement('div'); gUser.classList.add('message', 'user');
-                gUser.innerHTML = `📸 Imagen enviada:<br><img src="${evt.target.result}" class="img-preview-chat">`;
-                chatBox.appendChild(gUser); chatBox.scrollTop = chatBox.scrollHeight;
-                setTimeout(() => { globo("🤖 [Análisis Visual] ¡Veo tu ejercicio! Sigue estos pasos:\n1. Identifica los datos del enunciado.\n2. Aplica la fórmula principal paso a paso.\n3. Ojo con los signos al despejar.\n\n¿Quieres escribirme la ecuación para que la revisemos juntos?", "bot"); }, 1000);
-            };
-            r.readAsDataURL(file);
-        }
-
-        function enviarMensaje() {
-            const txt = userInput.value.trim(); if (txt === '') return;
-            globo(txt, 'user'); userInput.value = '';
-            setTimeout(() => {
-                const clean = txt.toLowerCase(); let res = '';
-                const greets = ['hola', 'buenas', 'que tal', 'cómo estás', 'como estas'];
-                if (greets.some(g => clean.startsWith(g) || clean === g)) {
-                    res = saludos[Math.floor(Math.random() * saludos.length)];
-                } else {
-                    const base = respuestasIA[activeAsig] || { 'default': '¡Qué buen interés! Estoy ampliando mis apuntes para esta materia.' };
-                    let found = false;
-                    for (let c in base) { if (clean.includes(c) && c !== 'default') { res = base[c]; found = true; break; } }
-                    if (!found) res = base['default'];
-                }
-                globo(res, 'bot');
-            }, 500);
-        }
-        function detectarEnter(e) { if (e.key === 'Enter') enviarMensaje(); }
-        globo('✨ ¡Hola! Ya estamos en tu zona de estudio. Soy tu tutor personal. Dime qué concepto se te resiste o pulsa 📸 para mandarme una foto de tu ejercicio. ¡Tú puedes!', 'bot');
-    </script>
-</body>
-</html>
