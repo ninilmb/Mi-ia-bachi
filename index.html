@@ -131,20 +131,21 @@
         </div>
         <!-- 8. HISTORIA DE ESPAÑA -->
         <div class="tarjeta-materia">
-            <div><span class="icono-materia">🏰</span><h3>Historia de España</h3><p>Ejes cronológicos simplificados y los acontecimientos políticos resumidos.</p></div>
-            <div class="botones-container"><button class="btn btn-chat" onclick="irA('historia-espana', 'chat')">💬 Chat IA</button><button class="btn btn-test" onclick="irA('historia-espana', 'test')">📝 Tests</button></div>
+            <div><span class="icono-materia">🏰</span><h3>Historia de España</h3><p>Ejes cronológicos simplificados y los acontecimientos clave de selectividad.</p></div>
+            <div class="botones-container"><button class="btn btn-chat" onclick="irA('historia', 'chat')">💬 Chat IA</button><button class="btn btn-test" onclick="irA('historia', 'test')">📝 Tests</button></div>
         </div>
-        <!-- 9. FILOSOFÍA -->
+        <!-- 9. HISTORIA DE LA FILOSOFÍA -->
         <div class="tarjeta-materia">
-            <div><span class="icono-materia">🏛️</span><h3>Hist. de la Filosofía</h3><p>Los autores clave desde Platón hasta Nietzsche explicados de forma humana.</p></div>
+            <div><span class="icono-materia">🏛️</span><h3>Historia de la Filosofía</h3><p>Los grandes pensadores, sus teorías principales y cómo compararlos fácilmente.</p></div>
             <div class="botones-container"><button class="btn btn-chat" onclick="irA('filosofia', 'chat')">💬 Chat IA</button><button class="btn btn-test" onclick="irA('filosofia', 'test')">📝 Tests</button></div>
         </div>
     </main>
 
+    <!-- 🛠️ EL MOTOR DE JAVASCRIPT: Aquí se solucionan los clics -->
     <script>
-        function irA(asignatura, herramienta) {
-            localStorage.setItem('asignaturaActiva', asignatura);
-            window.location.href = herramienta === 'chat' ? './chat.html' : './test.html';
+        function irA(materia, tipo) {
+            // El navegador se redirige al archivo (chat.html o test.html) pasando el nombre de la asignatura por la URL
+            window.location.href = `./${tipo}.html?asig=${materia}`;
         }
     </script>
 </body>
