@@ -5,23 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduIA - Bachillerato Cozy</title>
     <style>
-        /* NUEVA PALETA COZY AESTHETIC ROSA Y AMARILLO PASTEL */
+        /* PALETA COZY AESTHETIC ROSA Y AMARILLO PASTEL */
         :root {
-            --bg-principal: #fff9e6;       /* Amarillo pastel ultra suave para el fondo */
-            --rosa-pastel: #ffe3e8;        /* Rosa pastel para tarjetas y detalles */
-            --rosa-fuerte: #ff8fa3;        /* Rosa chicle aesthetic para acentos y botones */
-            --amarillo-pastel: #fff0b3;    /* Amarillo pastel para destacar */
-            --texto-cozy: #4a3e4d;         /* Marrón ciruela oscuro para letras muy bonitas y legibles */
+            --bg-principal: #fff9e6;       
+            --rosa-pastel: #ffe3e8;        
+            --rosa-fuerte: #ff8fa3;        
+            --amarillo-pastel: #fff0b3;    
+            --texto-cozy: #4a3e4d;         
             --blanco: #ffffff;
             --sombra-soft: rgba(255, 143, 163, 0.12);
         }
 
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            /* Usamos una combinación de fuentes del sistema modernas, redondeadas y bonitas */
-            font-family: 'Quicksand', 'Nunito', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Quicksand', 'Nunito', 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
@@ -31,166 +28,52 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 80px 20px 40px 20px; /* Espacio arriba para que no tape la barra superior */
+            padding: 90px 20px 40px 20px; 
         }
 
-        /* BARRA DE HERRAMIENTAS SUPERIOR AESTHETIC */
         .barra-superior {
-            position: absolute; 
-            top: 20px; 
-            right: 20px; 
-            display: flex; 
-            gap: 12px; 
-            z-index: 100;
+            position: absolute; top: 20px; right: 20px; display: flex; gap: 12px; z-index: 100;
         }
 
         .barra-superior a {
-            background: var(--blanco); 
-            text-decoration: none; 
-            padding: 10px 18px; 
-            border-radius: 14px; 
-            font-weight: 700; 
-            box-shadow: 0 6px 15px var(--sombra-soft); 
-            border: 2px solid var(--rosa-pastel); 
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
+            background: var(--blanco); text-decoration: none; padding: 10px 18px; 
+            border-radius: 14px; font-weight: 700; box-shadow: 0 6px 15px var(--sombra-soft); 
+            border: 2px solid var(--rosa-pastel); font-size: 0.9rem; transition: all 0.2s ease;
         }
 
         .barra-superior a:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 143, 163, 0.2);
+            transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 143, 163, 0.2);
         }
 
         .btn-focus-top { color: #10b981; }
         .btn-cal-top { color: var(--rosa-fuerte); }
         .btn-nota-top { color: #e6b800; }
 
-        /* CABECERA */
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            max-width: 600px;
-        }
+        header { text-align: center; margin-bottom: 50px; max-width: 600px; }
+        header h1 { font-size: 3.2rem; color: var(--texto-cozy); font-weight: 800; margin-bottom: 12px; }
+        header h1 span { color: var(--rosa-fuerte); text-shadow: 2px 2px 0px var(--amarillo-pastel); }
+        header p { color: var(--texto-cozy); opacity: 0.8; font-size: 1.1rem; line-height: 1.6; font-weight: 600; }
 
-        header h1 {
-            font-size: 3.2rem;
-            color: var(--texto-cozy);
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 12px;
-        }
+        .grid-asignaturas { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 25px; width: 100%; max-width: 1100px; padding: 10px; }
 
-        header h1 span {
-            color: var(--rosa-fuerte);
-            text-shadow: 2px 2px 0px var(--amarillo-pastel);
-        }
-
-        header p {
-            color: var(--texto-cozy);
-            opacity: 0.8;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            font-weight: 600;
-        }
-
-        /* CONTENEDOR DE ASIGNATURAS */
-        .grid-asignaturas {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-            gap: 25px;
-            width: 100%;
-            max-width: 1100px;
-            padding: 10px;
-        }
-
-        /* TARJETAS ROSA PASTEL */
         .tarjeta-materia {
-            background-color: var(--blanco);
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 10px 25px var(--sombra-soft);
-            border: 2px solid var(--rosa-pastel);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            background-color: var(--blanco); border-radius: 24px; padding: 30px; 
+            box-shadow: 0 10px 25px var(--sombra-soft); border: 2px solid var(--rosa-pastel); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;
         }
 
-        .tarjeta-materia:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 15px 35px rgba(255, 143, 163, 0.2);
-            background-color: #fffdfa;
-        }
+        .tarjeta-materia:hover { transform: translateY(-6px); box-shadow: 0 15px 35px rgba(255, 143, 163, 0.2); background-color: #fffdfa; }
+        .icono-materia { font-size: 2.2rem; margin-bottom: 15px; display: inline-block; filter: drop-shadow(0 4px 6px var(--sombra-soft)); }
+        .tarjeta-materia h3 { font-size: 1.4rem; color: var(--texto-cozy); font-weight: 700; margin-bottom: 10px; }
+        .tarjeta-materia p { color: var(--texto-cozy); opacity: 0.75; font-size: 0.95rem; line-height: 1.5; margin-bottom: 25px; flex-grow: 1; font-weight: 500; }
 
-        .icono-materia {
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            display: inline-block;
-            filter: drop-shadow(0 4px 6px var(--sombra-soft));
-        }
+        .botones-container { display: flex; gap: 12px; }
+        .btn { flex: 1; padding: 13px; border: none; border-radius: 14px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+        .btn-chat { background-color: var(--rosa-pastel); color: var(--rosa-fuerte); }
+        .btn-chat:hover { background-color: var(--rosa-fuerte); color: var(--blanco); transform: scale(1.03); }
+        .btn-test { background-color: var(--amarillo-pastel); color: var(--texto-cozy); border: 1px solid rgba(0,0,0,0.05); }
+        .btn-test:hover { background-color: #ffe16a; transform: scale(1.03); }
 
-        .tarjeta-materia h3 {
-            font-size: 1.4rem;
-            color: var(--texto-cozy);
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .tarjeta-materia p {
-            color: var(--texto-cozy);
-            opacity: 0.75;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 25px;
-            flex-grow: 1;
-            font-weight: 500;
-        }
-
-        /* BOTONES INTERNOS */
-        .botones-container {
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 13px;
-            border: none;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-chat {
-            background-color: var(--rosa-pastel);
-            color: var(--rosa-fuerte);
-        }
-
-        .btn-chat:hover {
-            background-color: var(--rosa-fuerte);
-            color: var(--blanco);
-            transform: scale(1.03);
-        }
-
-        .btn-test {
-            background-color: var(--amarillo-pastel);
-            color: var(--texto-cozy);
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .btn-test:hover {
-            background-color: #ffe16a;
-            transform: scale(1.03);
-        }
-
-        /* RESPONSIVE */
         @media (max-width: 768px) {
             body { padding-top: 140px; }
             .barra-superior { width: calc(100% - 40px); justify-content: center; right: 20px; left: 20px; }
@@ -200,7 +83,6 @@
     </style>
 </head>
 <body>
-
     <!-- BARRA DE HERRAMIENTAS SUPERIOR -->
     <div class="barra-superior">
         <a href="./focus.html" class="btn-focus-top">⏱️ Huerto Focus</a>
@@ -210,81 +92,62 @@
 
     <header>
         <h1>Edu<span>IA</span></h1>
-        <p>Tu rincón de estudio inteligente y relajado. Explicaciones cortas, humanas y herramientas bonitas para que superes Bachillerato con total tranquilidad.</p>
+        <p>Tu rincón de estudio inteligente y relajado. Explicaciones cortas, humanas y herramientas bonitas para Bachillerato.</p>
     </header>
 
     <main class="grid-asignaturas">
-        <!-- 1. MATEMÁTICAS CCSS -->
+        <!-- MATEMÁTICAS CCSS -->
         <div class="tarjeta-materia">
-            <div>
-                <span class="icono-materia">📊</span>
-                <h3>Matemáticas CCSS</h3>
-                <p>Domina la estadística, probabilidad, matrices y optimización de forma visual.</p>
-            </div>
-            <div class="botones-container">
-                <button class="btn btn-chat" onclick="irA('mates', 'chat')">💬 Chat IA</button>
-                <button class="btn btn-test" onclick="irA('mates', 'test')">📝 Tests</button>
-            </div>
+            <div><span class="icono-materia">📊</span><h3>Matemáticas CCSS</h3><p>Domina la estadística, probabilidad, matrices y optimización de forma visual.</p></div>
+            <div class="botones-container"><button class="btn btn-chat" onclick="irA('mates', 'chat')">💬 Chat IA</button><button class="btn btn-test" onclick="irA('mates', 'test')">📝 Tests</button></div>
         </div>
-
-        <!-- 2. QUÍMICA -->
+        <!-- QUÍMICA -->
         <div class="tarjeta-materia">
-            <div>
-                <span class="icono-materia">🧪</span>
-                <h3>Química</h3>
-                <p>Entiende la estructura atómica, la estequiometría y la formulación orgánica sin dramas.</p>
-            </div>
-            <div class="botones-container">
-                <button class="btn btn-chat" onclick="irA('quimica', 'chat')">💬 Chat IA</button>
-                <button class="btn btn-test" onclick="irA('quimica', 'test')">📝 Tests</button>
-            </div>
+            <div><span class="icono-materia">🧪</span><h3>Química</h3><p>Entiende la estructura atómica, la estequiometría y la formulación orgánica sin dramas.</p></div>
+            <div class="botones-container"><button class="btn btn-chat" onclick="irA('quimica', 'chat')">💬 Chat IA</button><button class="btn btn-test" onclick="irA('quimica', 'test')">📝 Tests</button></div>
         </div>
-
-        <!-- 3. BIOLOGÍA -->
+        <!-- BIOLOGÍA -->
         <div class="tarjeta-materia">
-            <div>
-                <span class="icono-materia">🧬</span>
-                <h3>Biología</h3>
-                <p>Aprende de forma clara la célula, genética, metabolismo e inmunología.</p>
-            </div>
-            <div class="botones-container">
-                <button class="btn btn-chat" onclick="irA('biologia', 'chat')">💬 Chat IA</button>
-                <button class="btn btn-test" onclick="irA('biologia', 'test')">📝 Tests</button>
-            </div>
+            <div><span class="icono-materia">🧬</span><h3>Biología</h3><p>Aprende de forma clara la célula, genética, metabolismo e inmunología.</p></div>
+            <div class="botones-container"><button class="btn btn-chat" onclick="irA('biologia', 'chat')">💬 Chat IA</button><button class="btn btn-test" onclick="irA('biologia', 'test')">📝 Tests</button></div>
         </div>
-
-        <!-- 4. PSICOLOGÍA -->
+        <!-- PSICOLOGÍA -->
         <div class="tarjeta-materia">
-            <div>
-                <span class="icono-materia">🧠</span>
-                <h3>Psicología</h3>
-                <p>Explora el comportamiento humano, los procesos cognitivos y las teorías principales.</p>
-            </div>
-            <div class="botones-container">
-                <button class="btn btn-chat" onclick="irA('psicologia', 'chat')">💬 Chat IA</button>
-                <button class="btn btn-test" onclick="irA('psicologia', 'test')">📝 Tests</button>
-            </div>
+            <div><span class="icono-materia">🧠</span><h3>Psicología</h3><p>Explora el comportamiento humano, los procesos cognitivos y las teorías principales.</p></div>
+            <div class="botones-container"><button class="btn btn-chat" onclick="irA('psicologia', 'chat')">💬 Chat IA</button><button class="btn btn-test" onclick="irA('psicologia', 'test')">📝 Tests</button></div>
         </div>
-
-        <!-- 5. CASTELLANO -->
+        <!-- CASTELLANO -->
         <div class="tarjeta-materia">
-            <div>
-                <span class="icono-materia">📚</span>
-                <h3>Castellano y Lit.</h3>
-                <p>Sintaxis simplificada, comentarios de texto y las obras literarias clave.</p>
-            </div>
-            <div class="botones-container">
-                <button class="btn btn-chat" onclick="irA('castellano', 'chat')">💬 Chat IA</button>
-                <button class="btn btn-test" onclick="irA('castellano', 'test')">📝 Tests</button>
-            </div>
+            <div><span class="icono-materia">📚</span><h3>Castellano y Lit.</h3><p>Sintaxis simplificada, comentarios de texto y las obras literarias clave.</p></div>
+            <div class="botones-container"><button class="btn btn-chat" onclick="irA('castellano', 'chat')">💬 Chat IA</button><button class="btn btn-test" onclick="irA('castellano', 'test')">📝 Tests</button></div>
         </div>
-
-        <!-- 6. CATALÁN -->
+        <!-- CATALÁN -->
         <div class="tarjeta-materia">
-            <div>
-                <span class="icono-materia">📖</span>
-                <h3>Catalán y Lit.</h3>
-                <p>Gramàtica, sintaxi i repàs de les lectures obligatòries de Batxillerat.</p>
-            </div>
-            <div class="botones-container">
-                <button class="btn btn-chat" onclick="irA('catalan', 'chat')">💬 Chat IA</button>
+            <div><span class="icono-materia">📖</span><h3>Catalán y Lit.</h3><p>Gramàtica, sintaxi i repàs de les lectures obligatòries de Batxillerat.</p></div>
+            <div class="botones-container"><button class="btn btn-chat" onclick="irA('catalan', 'chat')">💬 Chat IA</button><button class="btn btn-test" onclick="irA('catalan', 'test')">📝 Tests</button></div>
+        </div>
+        <!-- INGLÉS -->
+        <div class="tarjeta-materia">
+            <div><span class="icono-materia">🇬🇧</span><h3>Inglés</h3><p>Tiempos verbales, conectores esenciales y trucos para tus redacciones.</p></div>
+            <div class="botones-container"><button class="btn btn-chat" onclick="irA('ingles', 'chat')">💬 Chat IA</button><button class="btn btn-test" onclick="irA('ingles', 'test')">📝 Tests</button></div>
+        </div>
+        <!-- HISTORIA DE ESPAÑA -->
+        <div class="tarjeta-materia">
+            <div><span class="icono-materia">🏰</span><h3>Historia de España</h3><p>Ejes cronológicos simplificados y los acontecimientos políticos resumidos.</p></div>
+            <div class="botones-container"><button class="btn btn-chat" onclick="irA('historia-espana', 'chat')">💬 Chat IA</button><button class="btn btn-test" onclick="irA('historia-espana', 'test')">📝 Tests</button></div>
+        </div>
+        <!-- FILOSOFÍA -->
+        <div class="tarjeta-materia">
+            <div><span class="icono-materia">🏛️</span><h3>Hist. de la Filosofía</h3><p>Los autores clave desde Platón hasta Nietzsche explicados de forma humana.</p></div>
+            <div class="botones-container"><button class="btn btn-chat" onclick="irA('filosofia', 'chat')">💬 Chat IA</button><button class="btn btn-test" onclick="irA('filosofia', 'test')">📝 Tests</button></div>
+        </div>
+    </main>
+
+    <script>
+        function irA(asignatura, herramienta) {
+            localStorage.setItem('asignaturaActiva', asignatura);
+            window.location.href = herramienta === 'chat' ? './chat.html' : './test.html';
+        }
+    </script>
+</body>
+</html>
