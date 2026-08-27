@@ -50,59 +50,23 @@
             "¡Hola, hola! Ponte cómodo/a en tu zona de estudio. ¿Qué te está costando más? 🚀"
         ];
 
-        // BASE DE CONOCIMIENTO PARA LAS 9 ASIGNATURAS DE BACHILLERATO
+        // BASE DE CONOCIMIENTO DETALLADA CON EJEMPLOS PRÁCTICOS PARA LAS 9 ASIGNATURAS
         const respuestasIA = {
             'mates': {
-                'derivada': "¡Las derivadas son clave! Indican la rapidez con la que cambia una función en un punto concreto.\n\n📌 *Regla básica:* Si tienes x², su derivada es 2x. ¡Solo bajas el exponente multiplicando!",
-                'matriz': "Una matriz es una caja organizada con filas y columnas llena de números.\n\n📌 *Para Selectividad:* Te pedirán calcular la Inversa (A⁻¹) o usar el Método de Cramer. ¡Es muy mecánico!",
-                'probabilidad': "Mide las opciones de que algo ocurra.\n\n📌 *Truco:* Aplica la Regla de Laplace (Casos favorables / Casos posibles). Haz un diagrama de árbol si te cuesta visualizarlo.",
-                'default': "¡Gran duda matemática! Pregúntame sobre 'derivada', 'matriz' o 'probabilidad' para que te lo explique de forma súper clara."
+                'derivada': "¡Las derivadas miden el cambio instantáneo!\n\n💡 *Explicación:* Es la velocidad a la que cambia una función en un punto exacto.\n\n📝 *Ejemplo:* Si vas en coche de Madrid a Barcelona y miras el velocímetro en el kilómetro 100, la aguja te marca 120 km/h en ese preciso instante. Eso es una derivada: tu velocidad exacta en un punto, no la media del viaje.\n\n📌 *Fórmula básica:* Si tienes f(x) = x³, su derivada es f'(x) = 3x² (bajas el exponente multiplicando y le restas uno al de arriba).",
+                'matriz': "Una matriz es una tabla o caja rectangular llena de números ordenados por filas y columnas.\n\n💡 *Explicación:* Sirven para organizar datos complejos y resolver sistemas de ecuaciones gigantes de golpe.\n\n📝 *Ejemplo:* Imagina que una tienda vende Camisetas (C) y Pantalones (P) en dos ciudades. En la Fila 1 pones Madrid y en la Fila 2 Barcelona. En la Columna 1 pones las Camisetas y en la Columna 2 los Pantalones. ¡Ya tienes una matriz de datos 2x2!\n\n📌 *Para examen:* Práctica cómo calcular el Determinante |A| y la matriz Inversa (A⁻¹), entran siempre.",
+                'probabilidad': "La probabilidad mide qué tan posible es que ocurra un evento al azar.\n\n💡 *Explicación:* Se calcula dividiendo lo que tú quieres que salga entre todas las opciones posibles (Regla de Laplace).\n\n📝 *Ejemplo:* Si lanzas un dado normal de 6 caras y quieres saber la probabilidad de que salga un número par (2, 4 o 6), tus casos favorables son 3. Los casos totales son 6. Por tanto: 3 / 6 = 0.5 (un 50% de probabilidad).\n\n📌 *Truco de examen:* Para problemas encadenados (como sacar dos bolas sin reponer), dibuja siempre un diagrama de árbol.",
+                'default': "¡Qué buena pregunta matemática! Pregúntame sobre 'derivada', 'matriz' o 'probabilidad' y te daré una explicación detallada con ejemplos del día a día."
             },
             'quimica': {
-                'atomo': 'El átomo es la pieza fundamental de la materia. Tiene un núcleo positivo (protones y neutrones) en el centro y electrones orbitando alrededor.',
-                'enlace': 'Un enlace es la unión entre átomos. En el covalente comparten electrones y en el iónico uno le cede electrones al otro.',
-                'default': "¡Buena duda de Química! Puedes preguntarme sobre el 'atomo' o los 'enlaces' químicos por ahora."
+                'atomo': "El átomo es la unidad más pequeña de la que está hecho todo el universo.\n\n💡 *Explicación:* Tiene un núcleo central súper pesado con protones (+) y neutrones, y una corteza donde los electrones (-) giran a toda velocidad.\n\n📝 *Ejemplo:* Imagina un estadio de fútbol gigante. El núcleo del átomo sería una pequeña canica puesta justo en el punto de centro del campo, y los electrones serían mosquitos volando por las gradas más altas de todo el estadio. ¡El resto es espacio vacío!",
+                'enlace': "Un enlace químico es la fuerza que mantiene unidos a los átomos para formar moléculas.\n\n💡 *Explicación:* Los átomos se unen para cumplir la 'regla del octeto' (querer tener 8 electrones fuera para estar estables y tranquilos).\n\n📝 *Ejemplo:* En el enlace *Iónico*, un átomo le 'roba' un electrón a otro (como el Cloro robándole al Sodio para hacer sal de mesa, quedando pegados por atracción eléctrica). En el enlace *Covalente*, dos átomos comparten electrones de forma justa porque ninguno tiene fuerza para robárselo al otro (como dos personas que comparten un mismo paraguas).",
+                'default': "¡Buena duda de Química! Prueba a preguntarme qué es un 'atomo' o un 'enlace' para explicártelo a fondo con ejemplos."
             },
             'biologia': {
-                'celula': 'La célula es la unidad de vida más pequeña. Las eucariotas tienen núcleo organizado (como las nuestras) y las procariotas tienen el ADN suelto (bacterias).',
-                'mitosis': 'Es el proceso por el cual una célula madre se divide para dar dos células hijas exactamente iguales. ¡Es clave para crecer y reparar tejidos!',
-                'default': "¡La Biología es preciosa! Pregúntame cosas sobre la 'celula' o la 'mitosis' para empezar."
+                'celula': "La célula es la estructura viva más pequeña que existe.\n\n💡 *Explicación:* Hay dos grandes tipos: Procariotas (primitivas, sin núcleo, con el ADN flotando) y Eucariotas (avanzadas, con su ADN protegido dentro de un núcleo).\n\n📝 *Ejemplo:* Imagina que la célula es una fábrica. La célula *Eucariota* tiene los planos de fabricación (el ADN) guardados en una oficina con llave (el núcleo). En cambio, en la fábrica *Procariota* (como una bacteria), los planos están tirados en medio del suelo del taller para que cualquiera los use.\n\n📌 *Órganos:* Recuerda que las mitocondrias son las centrales eléctricas de la fábrica celular.",
+                'mitosis': "La mitosis es la división celular que sirve para replicar células idénticas.\n\n💡 *Explicación:* Una célula madre duplica su material genético y se divide en dos células hijas exactamente iguales.\n\n📝 *Ejemplo:* Si te haces un corte en el dedo cocinando, tu cuerpo necesita crear piel nueva idéntica para cerrar la herida. Las células de alrededor empiezan a hacer la mitosis: hacen fotocopias perfectas de sí mismas para rellenar el hueco de la herida hasta que se cura.",
+                'default': "¡La Biología es fascinante! Pregúntame sobre la 'celula' o la 'mitosis' para darte apuntes explicados paso a paso."
             },
             'psicologia': {
-                'conductismo': 'Teoría que dice que la psicología debe estudiar solo lo que se ve: la conducta. Su lema es que a cada Estímulo le sigue una Respuesta (como los perros de Pavlov).',
-                'freud': 'Sigmund Freud es el padre del psicoanálisis. Decía que nuestra mente es como un iceberg y que lo más importante está oculto en el "Inconsciente".',
-                'default': "¡Qué gran tema de Psicología! Prueba a preguntarme sobre el 'conductismo' o sobre 'Freud'."
-            },
-            'castellano': {
-                'sintaxis': 'El truco para analizar oraciones es buscar siempre primero el verbo. Pregúntale "¿Quién hace la acción?" para encontrar el Sujeto, y todo lo demás será el Predicado.',
-                'quijote': 'Escrito por Miguel de Cervantes en 1605, es la obra cumbre de nuestra literatura. Es una parodia de las novelas de caballerías que inauguró la novela moderna.',
-                'default': "¡Me encanta la Lengua! Puedes preguntarme trucos de 'sintaxis' o sobre literatura como 'El Quijote'."
-            },
-            'catalan': {
-                'pronoms': "Els pronoms febles serveixen per substituir coses i no repetir-les.\n\n📌 *Truco:* CD determinat s'en va amb 'el, la, els, les' i el CD indeterminat es substitueix per 'en'.",
-                'renaixenca': 'Moviment cultural del segle XIX que va servir para recuperar el català com a llengua de cultura i literatura després de segles de decadència.',
-                'default': "¡Parlem en català! Pregunta'm sobre els 'pronoms' o la 'Renaixença'."
-            },
-            'ingles': {
-                'passive': "La voz pasiva se usa cuando importa más el objeto que quien hace la acción.\n\n📌 *Fórmula:* Objeto + Verbo TO BE (en el tiempo correspondiente) + Verbo principal en Participio.",
-                'conditionals': "Hay 4 tipos. El First Conditional se usa para el futuro (If + Present Simple, will + infinitivo). El Second Conditional es para hipótesis (If + Past Simple, would + infinitivo).",
-                'default': "Let's practice English! Ask me about 'passive' voice or 'conditionals'."
-            },
-            'historia-espana': {
-                '1812': 'La Pepa es la primera Constitución española, creada en Cádiz en plena Guerra de la Independencia. Era súper liberal para su época: limitaba el poder del rey y daba derechos al ciudadano.',
-                'guerra civil': 'Conflicto armado (1936-1939) que comenzó tras el golpe de Estado contra la Segunda República, dando paso a la larga dictadura del general Francisco Franco.',
-                'default': "¡La Historia de España tiene mucha miga! Pregúntame sobre la Constitución de '1812' o la 'guerra civil'."
-            },
-            'filosofia': {
-                'platon': 'Platón decía que este mundo físico es solo un reflejo borroso (Mundo Sensible) de un mundo perfecto e intangible donde habitan las verdaderas realidades (Mundo de las Ideas).',
-                'kant': 'Kant creó el "imperativo categórico": una norma moral que dice que debes actuar siempre pensando si te gustaría que tu acción se convirtiera en una ley universal.',
-                'default': "¡Pensar nos hace libres! Pregúntame sobre 'Platon' o 'Kant' para explicártelo de forma humana."
-            }
-        };
-
-        const activeAsig = localStorage.getItem('asignaturaActiva') || 'mates';
-        document.getElementById('titulo-asignatura').textContent = nombres[activeAsig] || 'Tutor de IA';
-        const chatBox = document.getElementById('chatBox');
-        const userInput = document.getElementById('userInput');
-
-        function globo(txt, emisor) {
+                'conductismo': "El conductismo es una corriente de la psicología centrada solo en lo que se puede ver.\n\n💡 *Explicación:* Ignora los pensamientos internos porque no se pueden medir, y dice que todo comportamiento es fruto de un Estímulo que produce una Respuesta.\n\n📝 *Ejemplo:* El experimento de Pávlov con sus perros. Cada vez que les iba a dar de comer (Estímulo), tocaba una campana. Al cabo de un tiempo, los perros asociaron la campana con la comida, de modo que solo con escuchar la campana ya empezaban a salivar (Respuesta), aunque no hubiera comida delante.",
