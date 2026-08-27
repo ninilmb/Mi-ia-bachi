@@ -127,11 +127,6 @@
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        .chat-input-area button:hover {
-            opacity: 0.9;
         }
     </style>
 </head>
@@ -164,30 +159,28 @@
             'filosofia': '🏛️ Filosofía'
         };
 
-        // SALUDOS INTERACTIVOS GENERALES
         const respuestasSaludos = [
-            "¡Hola! Qué alegría tenerte por aquí en tu zona de estudio. Con calma y sin agobios, ¿en qué concepto te puedo echar una mano hoy? ✨",
-            "¡Buenas! Menudo mérito tienes estudiando Bachillerato hoy. Cuéntame, ¿qué es lo que más se te está atragantando de este tema? Vamos a solucionarlo juntos. 🤝",
-            "¡Hola, hola! Ponte cómodo/a. Estoy aquí para hacértelo todo más fácil y ameno. ¿Qué duda ronda por tu cabeza en esta asignatura? 🚀",
-            "¡Hola! Recuerda que no hay preguntas tontas. Respira hondo y dime qué parte necesitas que te explique de forma súper sencilla. 🧠"
+            "¡Hola! Qué alegría tenerte por aquí. Con calma y sin agobios, ¿en qué te puedo echar una mano hoy? ✨",
+            "¡Buenas! Menudo mérito tienes estudiando Bachillerato hoy. Cuéntame, ¿qué se te está atragantando? Vamos a solucionarlo juntos. 🤝",
+            "¡Hola, hola! Ponte cómodo/a. Estoy aquí para hacértelo todo más fácil y ameno. ¿Qué duda tienes? 🚀",
+            "¡Hola! Recuerda que no hay preguntas tontas. Respira hondo y dime qué parte necesitas que te explique. 🧠"
         ];
 
-        // BASE DE CONOCIMIENTO (SIMULADOR DE IA LOCAL)
         const respuestasIA = {
             'mates': {
-                'derivada': 'Una derivada es simplemente la velocidad a la que cambia algo. Imagina que mides la rapidez con la que se llena una piscina en un segundo exacto. ¡No le tengas miedo, son solo tasas de cambio!',
-                'matriz': 'Una matriz es como una tabla de Excel. Una caja súper ordenada con filas y columnas llena de números que nos sirve para resolver sistemas de ecuaciones súper rápido.',
-                'default': "¡Es una gran pregunta de Mates! Aunque todavía estoy ampliando mi base de datos para resolver ese problema exacto con fórmulas, recuerda que lo importante es ir paso a paso. ¿Quieres que repasemos qué es una 'derivada' o una 'matriz' para calentar motores?"
+                'derivada': 'Una derivada es simplemente la velocidad a la que cambia algo. Imagina que mides la rapidez con la que se llena una piscina en un segundo exacto.',
+                'matriz': 'Una matriz es como una tabla de Excel. Una caja organizada con filas y columnas llena de números para hacer cálculos rápidos.',
+                'default': "¡Es una gran pregunta de Mates! Aunque todavía estoy ampliando mi base de datos para resolver ese problema exacto, recuerda que lo importante es ir paso a paso. ¿Quieres que repasemos qué es una 'derivada' o una 'matriz'?"
             },
             'quimica': {
-                'atomo': 'El átomo es la pieza de LEGO fundamental de la que está hecho todo el universo. Tiene un núcleo positivo en el centro y electrones cargados de energía girando a toda pastilla alrededor.',
-                'enlace': 'Un enlace químico es como un apretón de manos muy fuerte o un abrazo entre dos átomos. Se unen para compartir energía y estar mucho más estables y tranquilos juntos.',
-                'default': "¡Oye, qué buena duda de Química! Todavía estoy cargando los apuntes exactos para esa fórmula en mi sistema, pero no te agobies. ¿Te apetece que te explique de forma sencilla cómo funciona un 'atomo' o qué tipos de 'enlace' existen?"
+                'atomo': 'El átomo es la pieza de LEGO fundamental de la que está hecho todo el universo. Tiene un núcleo al centro y electrones girando alrededor.',
+                'enlace': 'Un enlace químico es como un apretón de manos fuerte entre dos átomos para unirse y estar más estables juntos.',
+                'default': "¡Oye, qué buena duda de Química! Todavía estoy cargando los apuntes para esa fórmula, pero no te agobies. ¿Te apetece que te explique cómo funciona un 'atomo' o qué es un 'enlace'?"
             },
             'filosofia': {
-                'platon': 'Platón decía que vivimos en un mundo de sombras (lo que vemos y tocamos, que cambia), pero que la verdadera realidad son las Ideas perfectas, que son eternas y están en un mundo intangible. ¡Como si nuestro mundo fuera solo el reflejo de un proyector!',
-                'kant': 'Kant inventó el \"imperativo categórico\". Básicamente significa: antes de actuar, piensa si te gustaría que todo el mundo hiciera lo mismo que tú. Si la respuesta es sí, vas por buen camino moral.',
-                'default': "¡Qué gran dilema filosófico acabas de plantear! Me encanta cómo piensas. Aún estoy puliendo mis textos para responder a ese autor en concreto, pero si quieres podemos charlar un rato sobre 'Platon' o 'Kant' para inspirarte."
+                'platon': 'Platón decía que vivimos en un mundo de sombras (físico), pero que la verdadera realidad son las Ideas perfectas que están en otro mundo intangible.',
+                'kant': 'Kant inventó el \"imperativo categórico\". Básicamente significa: actúa siempre de una forma en la que te gustaría que todo el mundo actuara.',
+                'default': "¡Qué gran dilema filosófico! Me encanta cómo piensas. Aún estoy puliendo mis textos sobre ese autor, pero si quieres podemos charlar sobre 'Platon' o 'Kant'."
             }
         };
 
@@ -198,7 +191,7 @@
         const userInput = document.getElementById('userInput');
 
         function bienvenida() {
-            agregarGlobo('✨ ¡Hola! Ya estamos en tu zona de estudio y tranquilidad. Soy tu tutor personal. Dime qué concepto se te resiste y te lo explicaré de forma breve, humana y súper fácil. ¡Tú puedes con esto!', 'bot');
+            agregarGlobo('✨ ¡Hola! Ya estamos en tu zona de estudio. Soy tu tutor personal. Dime qué concepto se te resiste y te lo explicaré de forma breve y súper fácil.', 'bot');
         }
 
         function agregarGlobo(texto, emisor) {
@@ -216,19 +209,46 @@
             agregarGlobo(textoUsuario, 'user');
             userInput.value = '';
 
-            // Pequeño retardo para simular que la IA está escribiendo de forma natural
             setTimeout(() => {
                 const textoLimpio = textoUsuario.toLowerCase();
                 let respuesta = '';
 
-                // 1. REGLA DE EMPATÍA: ¿El usuario está saludando?
-                const palabrasSaludo = ['hola', 'buenas', 'que tal', 'cómo estás', 'como estas', 'hello', 'buenos dias', 'buenas tardes'];
+                const palabrasSaludo = ['hola', 'buenas', 'que tal', 'cómo estás', 'como estas', 'hello'];
                 const esSaludo = palabrasSaludo.some(saludo => textoLimpio.startsWith(saludo) || textoLimpio === saludo);
 
                 if (esSaludo) {
-                    // Elige un saludo amigable aleatorio de la lista
                     const indiceAleatorio = Math.floor(Math.random() * respuestasSaludos.length);
                     respuesta = respuestasSaludos[indiceAleatorio];
                 } else {
-                    // 2. Si no es un saludo, busca palabras clave de la asignatura
                     const baseMateria = respuestasIA[asignaturaActiva] || { 
+                        'default': '¡Qué gran interés tienes! Me pillas justo ampliando mis apuntes para esta asignatura de Bachillerato. ¡Seguro que lo sacas adelante!' 
+                    };
+                    
+                    let encontrada = false;
+                    for (let clave in baseMateria) {
+                        if (textoLimpio.includes(clave) && clave !== 'default') {
+                            respuesta = baseMateria[clave];
+                            encontrada = true;
+                            break;
+                        }
+                    }
+
+                    if (!encontrada) {
+                        respuesta = baseMateria['default'] || '¡Vaya! No estoy seguro de haber entendido ese concepto técnico. ¿Podrías intentar explicarme otra duda o cambiar de tema?';
+                    }
+                }
+
+                agregarGlobo(respuesta, 'bot');
+            }, 700);
+        }
+
+        function detectarEnter(event) {
+            if (event.key === 'Enter') {
+                enviarMensaje();
+            }
+        }
+
+        bienvenida();
+    </script>
+</body>
+</html>
