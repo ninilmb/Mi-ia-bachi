@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduIA - Cozy Focus Timer</title>
+    <style>
+        /* NUEVA PALETA DE COLORES SOFT AESTHETIC ROSA Y AMARILLO PASTEL */
+        :root {
+            --bg-principal: #fff9e6;       /* Amarillo pastel ultra suave de fondo */
+            --rosa-pastel: #ffe3e8;        /* Rosa pastel para fondos de tarjetas y detalles */
+            --rosa-fuerte: #ff8fa3;        /* Rosa chicle aesthetic para acentos y botones principales */
+            --amarillo-pastel: #fff0b3;    /* Amarillo pastel para elementos secundarios */
+            --texto-cozy: #4a3e4d;         /* Marrón ciruela oscuro (más suave que el negro) para textos */
+            --blanco: #ffffff;
+            --sombra-soft: rgba(255, 143, 163, 0.12);
+            --verde-hoja: #a8e6cf;         /* Verde pastel suave para la barra de crecimiento */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-principal); color: var(--texto-cozy); min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        header {
+            background-color: var(--blanco); padding: 15px 20px; box-shadow: 0 8px 20px var(--sombra-soft);
+            display: flex; justify-content: space-between; align-items: center; border-radius: 20px;
+            max-width: 550px; width: 100%; margin-bottom: 25px; border: 2px solid var(--rosa-pastel);
+        }
+
+        .btn-volver {
+            background-color: var(--rosa-pastel); color: var(--rosa-fuerte); border: none;
+            padding: 8px 18px; border-radius: 14px; font-weight: 700; cursor: pointer; text-decoration: none; font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+        .btn-volver:hover { transform: scale(1.05); }
+
+        header h2 { font-size: 1.2rem; font-weight: 700; color: var(--texto-cozy); }
+
+        .container { max-width: 550px; width: 100%; }
+        
+        .card { 
+            background: var(--blanco); border-radius: 30px; padding: 40px 35px; 
+            box-shadow: 0 12px 30px var(--sombra-soft); border: 2px solid var(--rosa-pastel); text-align: center; 
+        }
+        
+        /* ILUSTRACIÓN DE LA PLANTA */
+        .jardin-box { 
+            height: 160px; display: flex; align-items: center; justify-content: center; font-size: 5.5rem; 
+            margin-bottom: 10px; transition: transform 0.3s ease; 
+            filter: drop-shadow(0 4px 8px var(--sombra-soft));
+        }
+        .creciendo { animation: balanceo 2.5s infinite ease-in-out; }
+        
+        @keyframes balanceo {
+            0%, 100% { transform: rotate(-4deg) scale(1); }
+            50% { transform: rotate(4deg) scale(1.03); }
+        }
+
+        .estado-texto { color: var(--texto-cozy); font-size: 0.95rem; font-weight: 600; margin-bottom: 30px; opacity: 0.8; }
+
+        /* NÚMEROS DEL CRONÓMETRO */
+        .tiempo-display { font-size: 4.5rem; font-weight: 800; color: var(--texto-cozy); font-family: monospace; letter-spacing: -2px; margin-bottom: 20px; }
+        
+        .input-tiempo-box { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 30px; background: var(--bg-principal); padding: 10px 20px; border-radius: 15px; border: 1px dashed var(--rosa-fuerte); }
+        .input-tiempo-box label { font-weight: 700; color: var(--texto-cozy); font-size: 0.95rem; }
+        input[type="number"] { width: 75px; padding: 8px; border-radius: 12px; border: 2px solid var(--rosa-pastel); background: var(--blanco); text-align: center; font-size: 1.1rem; font-weight: 800; color: var(--texto-cozy); outline: none; }
+
+        /* BOTONES DE CONTROL */
+        .controles { display: flex; gap: 15px; justify-content: center; }
+        .btn-focus { padding: 14px 32px; border: none; border-radius: 16px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.2s ease; }
+        
+        .btn-start { 
+            background: var(--rosa-fuerte); color: white; 
+            box-shadow: 0 6px 15px rgba(255, 143, 163, 0.4); 
+        }
+        .btn-start:hover { transform: translateY(-2px); opacity: 0.95; }
+        
+        .btn-cancel { background: var(--amarillo-pastel); color: var(--texto-cozy); border: 2px solid rgba(24a, 20a, 10a, 0.1); }
+        .btn-cancel:hover { background: #ffe066; }
+
+        /* LÍNEA DE CRECIMIENTO */
+        .progress-bar-container { width: 100%; height: 12px; background-color: var(--bg-principal); border-radius: 20px; margin-top: 30px; overflow: hidden; border: 1px solid var(--rosa-pastel); }
+        .progress-bar { height: 100%; width: 0%; background-color: var(--verde-hoja); border-radius: 20px; transition: width 1s linear; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="btn-volver">← Volver</a>
+        <h2>⏱️ Huerto Focus Cozy</h2>
+        <div style="width: 70px;"></div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <!-- Maceta e icono de planta evolutivo -->
+            <div class="jardin-box" id="plantaIcono">🫙</div>
+            <div class="estado-texto" id="plantaEstado">Prepara la tierra introduciendo los minutos</div>
+
+            <!-- Cuenta atrás -->
+            <div class="tiempo-display" id="timerDisplay">25:00</div>
+
+            <!-- Selector de minutos personalizado -->
+            <div class="input-tiempo-box" id="inputArea">
+                <label for="minutosInput">Tiempo de estudio:</label>
+                <input type="number" id="minutosInput" value="25" min="1" max="180">
+                <label>minutos</label>
+            </div>
+
+            <!-- Mandos de control -->
+            <div class="controles">
+                <button class="btn-focus btn-start" id="btnIniciar" onclick="iniciarTemporizador()">Plantar Semilla 🌱</button>
+                <button class="btn-focus btn-cancel" id="btnCancelar" onclick="cancelarTemporizador()" style="display:none;">Rendirse 🍂</button>
+            </div>
+
+            <!-- Línea de crecimiento inferior -->
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cuentaAtras;
+        let tiempoTotalSegundos;
+        let tiempoRestanteSegundos;
+        let estaCorriendo = false;
+
+        const timerDisplay = document.getElementById('timerDisplay');
+        const plantaIcono = document.getElementById('plantaIcono');
+        const plantaEstado = document.getElementById('plantaEstado');
+        const minutosInput = document.getElementById('minutosInput');
+        const btnIniciar = document.getElementById('btnIniciar');
+        const btnCancelar = document.getElementById('btnCancelar');
+        const inputArea = document.getElementById('inputArea');
+        const progressBar = document.getElementById('progressBar');
+
+        function actualizarDisplay(segundos) {
+            const m = Math.floor(segundos / 60);
+            const s = segundos % 60;
+            timerDisplay.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        function actualizarEvolucionPlanta() {
+            const segundosTranscurridos = tiempoTotalSegundos - tiempoRestanteSegundos;
+            const porcentaje = (segundosTranscurridos / tiempoTotalSegundos) * 100;
+            
+            progressBar.style.width = `${porcentaje}%`;
+
+            if (porcentaje === 0) {
+                plantaIcono.textContent = "🫙";
+                plantaEstado.textContent = "Tierra lista, planta tu semilla.";
+            } else if (porcentaje > 0 && porcentaje < 25) {
+                plantaIcono.textContent = "🌱";
+                plantaEstado.textContent = "¡Ha brotado tu semilla! Concéntrate para cuidarla.";
+            } else if (porcentaje >= 25 && porcentaje < 60) {
+                plantaIcono.textContent = "🌿";
+                plantaEstado.textContent = "La planta está ganando hojas gracias a tu constancia.";
+            } else if (porcentaje >= 60 && porcentaje < 99) {
+                plantaIcono.textContent = "🪴";
+                plantaEstado.textContent = "¡Ya es una planta fuerte! Estás a muy poco de terminar.";
+            } else if (porcentaje >= 100) {
+                plantaIcono.textContent = "🌸";
+                plantaEstado.textContent = "¡Enhorabuena! Has completado tu sesión y tu planta ha florecido.";
+            }
+        }
+
+        function iniciarTemporizador() {
+            const minutos = parseInt(minutosInput.value);
+            if (isNaN(minutos) || minutos <= 0) {
+                alert("Introduce un tiempo de estudio válido.");
+                return;
+            }
+
+            estaCorriendo = true;
+            tiempoTotalSegundos = minutos * 60;
+            tiempoRestanteSegundos = tiempoTotalSegundos;
+
+            inputArea.style.display = 'none';
+            btnIniciar.style.display = 'none';
+            btnCancelar.style.display = 'inline-block';
+            plantaIcono.classList.add('creciendo');
+
+            actualizarDisplay(tiempoRestanteSegundos);
+            actualizarEvolucionPlanta();
+
+            cuentaAtras = setInterval(() => {
+                tiempoRestanteSegundos--;
+                actualizarDisplay(tiempoRestanteSegundos);
+                actualizarEvolucionPlanta();
+
+                if (tiempoRestanteSegundos <= 0) {
+                    clearInterval(cuentaAtras);
+                    finalizarExito();
+                }
+            }, 1000);
+        }
+
+        function finalizarExito() {
+            estaCorriendo = false;
+            plantaIcono.classList.remove('creciendo');
+            plantaIcono.textContent = "🌸";
+            plantaEstado.textContent = "🎉 ¡Misión cumplida! Tu sesión de enfoque ha terminado con éxito.";
+            btnCancelar.style.display = 'none';
