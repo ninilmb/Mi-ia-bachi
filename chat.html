@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduIA - Chat Tutor</title>
+    <title>EduIA - Chat Inteligente de Bachillerato</title>
     <style>
         :root {
             --bg-principal: #f0f4f8;
@@ -13,6 +13,7 @@
             --azul-pastel: #dbeafe;
             --blanco: #ffffff;
             --sombra: rgba(148, 163, 184, 0.15);
+            --verde-aesthetic: #10b981;
         }
 
         * {
@@ -51,10 +52,7 @@
             font-size: 0.9rem;
         }
 
-        header h2 {
-            font-size: 1.2rem;
-            color: var(--azul-oscuro);
-        }
+        header h2 { font-size: 1.2rem; color: var(--azul-oscuro); }
 
         .chat-container {
             flex: 1;
@@ -85,6 +83,7 @@
             border-radius: 16px;
             font-size: 0.95rem;
             line-height: 1.5;
+            white-space: pre-line;
         }
 
         .message.bot {
@@ -101,15 +100,45 @@
             border-top-right-radius: 4px;
         }
 
+        /* Vista previa de la foto subida en el chat */
+        .img-preview-chat {
+            max-width: 200px;
+            border-radius: 10px;
+            margin-top: 5px;
+            display: block;
+        }
+
         .chat-input-area {
             padding: 15px 20px;
             background-color: var(--bg-principal);
             display: flex;
+            align-items: center;
             gap: 10px;
             border-top: 1px solid rgba(219, 234, 254, 0.7);
         }
 
-        .chat-input-area input {
+        /* Botón de la cámara ocultando el input real */
+        .btn-camara {
+            background-color: var(--azul-pastel);
+            color: var(--azul-electrico);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .btn-camara:hover {
+            background-color: var(--azul-electrico);
+            color: var(--blanco);
+        }
+
+        .chat-input-area input[type="text"] {
             flex: 1;
             padding: 14px;
             border: 1px solid rgba(148, 163, 184, 0.3);
@@ -119,11 +148,11 @@
             background-color: var(--blanco);
         }
 
-        .chat-input-area button {
+        .chat-input-area button.btn-enviar {
             background-color: var(--azul-oscuro);
             color: var(--blanco);
             border: none;
-            padding: 0 22px;
+            padding: 14px 22px;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
@@ -141,46 +170,42 @@
     <div class="chat-container">
         <div class="chat-messages" id="chatBox"></div>
         <div class="chat-input-area">
-            <input type="text" id="userInput" placeholder="Pregúntame una duda sobre esta materia..." onkeypress="detectarEnter(event)">
-            <button onclick="enviarMensaje()">Enviar</button>
+            <!-- Botón de Cámara que activa el lector oculto -->
+            <label class="btn-camara" for="fileInput">📸</label>
+            <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="procesarFoto(event)">
+            
+            <input type="text" id="userInput" placeholder="Pregúntame una duda o sube una foto..." onkeypress="detectarEnter(event)">
+            <button class="btn-enviar" onclick="enviarMensaje()">Enviar</button>
         </div>
     </div>
 
     <script>
         const nombresAsignaturas = {
-            'mates': '📊 Matemáticas CCSS',
-            'quimica': '🧪 Química',
-            'biologia': '🧬 Biología',
-            'psicologia': '🧠 Psicología',
-            'castellano': '📚 Castellano y Lit.',
-            'catalan': '📖 Catalán y Lit.',
-            'ingles': '🇬🇧 Inglés',
-            'historia-espana': '🏰 Historia de España',
-            'filosofia': '🏛️ Filosofía'
+            'mates': '📊 Matemáticas CCSS', 'quimica': '🧪 Química', 'biologia': '🧬 Biología',
+            'psicologia': '🧠 Psicología', 'castellano': '📚 Castellano y Lit.', 'catalan': '📖 Catalán y Lit.',
+            'ingles': '🇬🇧 Inglés', 'historia-espana': '🏰 Historia de España', 'filosofia': '🏛️ Filosofía'
         };
 
         const respuestasSaludos = [
-            "¡Hola! Qué alegría tenerte por aquí. Con calma y sin agobios, ¿en qué te puedo echar una mano hoy? ✨",
-            "¡Buenas! Menudo mérito tienes estudiando Bachillerato hoy. Cuéntame, ¿qué se te está atragantando? Vamos a solucionarlo juntos. 🤝",
-            "¡Hola, hola! Ponte cómodo/a. Estoy aquí para hacértelo todo más fácil y ameno. ¿Qué duda tienes? 🚀",
-            "¡Hola! Recuerda que no hay preguntas tontas. Respira hondo y dime qué parte necesitas que te explique. 🧠"
+            "¡Hola! Qué alegría tenerte por aquí. Vamos a darle caña al estudio de forma relajada. ¿Qué concepto vemos hoy? ✨",
+            "¡Buenas! Menudo mérito tienes hincando los codos. Cuéntame tu duda y la resolvemos sin dramas. 🤝",
+            "¡Hola, hola! Ponte cómodo/a en tu zona de estudio. ¿Qué ejercicio o teoría te está costando más? 🚀"
         ];
 
+        // BASE DE DATOS MATEMÁTICA Y GENERAL EXPANDIDA
         const respuestasIA = {
             'mates': {
-                'derivada': 'Una derivada es simplemente la velocidad a la que cambia algo. Imagina que mides la rapidez con la que se llena una piscina en un segundo exacto.',
-                'matriz': 'Una matriz es como una tabla de Excel. Una caja organizada con filas y columnas llena de números para hacer cálculos rápidos.',
-                'default': "¡Es una gran pregunta de Mates! Aunque todavía estoy ampliando mi base de datos para resolver ese problema exacto, recuerda que lo importante es ir paso a paso. ¿Quieres que repasemos qué es una 'derivada' o una 'matriz'?"
+                'derivada': "¡Las derivadas son preciosas! Imagina que vas en coche: el velocímetro te dice tu velocidad en un instante exacto. Eso es la derivada: la rapidez con la que cambia una función en un punto concreto.\n\n📌 *Regla básica:* Si tienes x², su derivada es 2x. ¡Solo bajas el exponente multiplicando!",
+                'matriz': "Una matriz es una caja organizada con filas y columnas llena de números. Piensa en ella como una tabla de datos inteligente.\n\n📌 *Para Selectividad:* Te pedirán calcular la Inversa (A⁻¹) o usar el Método de Cramer para sistemas de ecuaciones. ¡Es mecánico, si practicas el orden lo tienes asegurado!",
+                'probabilidad': "La probabilidad mide las opciones de que algo ocurra.\n\n📌 *Truco de Bachillerato:* Grábate a fuego la Regla de Laplace: Casos favorables partidos por Casos posibles. Si es un problema complejo, haz un diagrama de árbol, ¡te salvará la vida!",
+                'estadistica': "En ciencias sociales se centra en intervalos de confianza y muestreo.\n\n📌 *Secreto:* Siempre te pedirán la media muestral o estimar una proporción. Usa la fórmula de Zα/2 (el nivel de confianza) y el resto es usar la calculadora con cuidado.",
+                'limite': "Un límite es ver a qué valor se acerca una función cuando la 'x' se aproxima a un número. Si te da una indeterminación como 0/0, ¡aplica la Regla de L'Hôpital derivando arriba y abajo!",
+                'default': "¡Qué buena pregunta matemática! Como tutor local, domino conceptos clave de Bachillerato como derivadas, matrices, límites, probabilidad y estadística. ¿Cuál de estos te apetece que desengranemos de manera súper amigable hoy?"
             },
             'quimica': {
-                'atomo': 'El átomo es la pieza de LEGO fundamental de la que está hecho todo el universo. Tiene un núcleo al centro y electrones girando alrededor.',
-                'enlace': 'Un enlace químico es como un apretón de manos fuerte entre dos átomos para unirse y estar más estables juntos.',
-                'default': "¡Oye, qué buena duda de Química! Todavía estoy cargando los apuntes para esa fórmula, pero no te agobies. ¿Te apetece que te explique cómo funciona un 'atomo' o qué es un 'enlace'?"
-            },
-            'filosofia': {
-                'platon': 'Platón decía que vivimos en un mundo de sombras (físico), pero que la verdadera realidad son las Ideas perfectas que están en otro mundo intangible.',
-                'kant': 'Kant inventó el \"imperativo categórico\". Básicamente significa: actúa siempre de una forma en la que te gustaría que todo el mundo actuara.',
-                'default': "¡Qué gran dilema filosófico! Me encanta cómo piensas. Aún estoy puliendo mis textos sobre ese autor, pero si quieres podemos charlar sobre 'Platon' o 'Kant'."
+                'atomo': 'El átomo es la pieza fundamental de la materia. Tiene un núcleo positivo en el centro y electrones orbitando alrededor.',
+                'enlace': 'Un enlace es la unión entre átomos para conseguir estabilidad química.',
+                'default': "¡Excelente duda de Química! Recuerda que puedes preguntarme sobre el 'atomo' o los 'enlaces' químicos por ahora."
             }
         };
 
@@ -191,7 +216,7 @@
         const userInput = document.getElementById('userInput');
 
         function bienvenida() {
-            agregarGlobo('✨ ¡Hola! Ya estamos en tu zona de estudio. Soy tu tutor personal. Dime qué concepto se te resiste y te lo explicaré de forma breve y súper fácil.', 'bot');
+            agregarGlobo('✨ ¡Hola! Ya estamos en tu zona de estudio. Soy tu tutor personal de Bachillerato. Ahora puedes escribirme tus dudas matemáticas complejas o incluso pulsar el botón de la cámara 📸 para enviarme una foto de tu ejercicio. ¡Vamos a por ello!', 'bot');
         }
 
         function agregarGlobo(texto, emisor) {
@@ -202,53 +227,15 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        function enviarMensaje() {
-            const textoUsuario = userInput.value.trim();
-            if (textoUsuario === '') return;
+        // LÓGICA DE FOTOS MULTIMEDIA
+        function procesarFoto(event) {
+            const archivo = event.target.files[0];
+            if (!archivo) return;
 
-            agregarGlobo(textoUsuario, 'user');
-            userInput.value = '';
-
-            setTimeout(() => {
-                const textoLimpio = textoUsuario.toLowerCase();
-                let respuesta = '';
-
-                const palabrasSaludo = ['hola', 'buenas', 'que tal', 'cómo estás', 'como estas', 'hello'];
-                const esSaludo = palabrasSaludo.some(saludo => textoLimpio.startsWith(saludo) || textoLimpio === saludo);
-
-                if (esSaludo) {
-                    const indiceAleatorio = Math.floor(Math.random() * respuestasSaludos.length);
-                    respuesta = respuestasSaludos[indiceAleatorio];
-                } else {
-                    const baseMateria = respuestasIA[asignaturaActiva] || { 
-                        'default': '¡Qué gran interés tienes! Me pillas justo ampliando mis apuntes para esta asignatura de Bachillerato. ¡Seguro que lo sacas adelante!' 
-                    };
-                    
-                    let encontrada = false;
-                    for (let clave in baseMateria) {
-                        if (textoLimpio.includes(clave) && clave !== 'default') {
-                            respuesta = baseMateria[clave];
-                            encontrada = true;
-                            break;
-                        }
-                    }
-
-                    if (!encontrada) {
-                        respuesta = baseMateria['default'] || '¡Vaya! No estoy seguro de haber entendido ese concepto técnico. ¿Podrías intentar explicarme otra duda o cambiar de tema?';
-                    }
-                }
-
-                agregarGlobo(respuesta, 'bot');
-            }, 700);
-        }
-
-        function detectarEnter(event) {
-            if (event.key === 'Enter') {
-                enviarMensaje();
-            }
-        }
-
-        bienvenida();
-    </script>
-</body>
-</html>
+            // Mostrar la imagen que subió el alumno en la caja de chat
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const globoUsuario = document.createElement('div');
+                globoUsuario.classList.add('message', 'user');
+                globoUsuario.innerHTML = `📸 Has enviado una imagen:<br><img src="${e.target.result}" class="img-preview-chat">`;
+                chatBox.appendChild(globoUsuario);
