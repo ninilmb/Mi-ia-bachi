@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduIA - Bachillerato Aesthetic</title>
+    <style>
+        /* PALETA DE COLORES AZUL AESTHETIC */
+        :root {
+            --bg-principal: #f0f4f8;       /* Azul grisáceo muy suave y limpio */
+            --azul-oscuro: #1e293b;        /* Azul medianoche para textos y títulos */
+            --azul-aesthetic: #64748b;     /* Azul apagado para subtítulos */
+            --azul-electrico: #3b82f6;     /* Azul vibrante para botones y acentos */
+            --azul-pastel: #dbeafe;        /* Azul cielo claro para fondos de tarjetas */
+            --blanco: #ffffff;
+            --sombra: rgba(148, 163, 184, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            color: var(--azul-oscuro);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        /* CABECERA */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            max-width: 600px;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            color: var(--azul-oscuro);
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        header h1 span {
+            color: var(--azul-electrico);
+        }
+
+        header p {
+            color: var(--azul-aesthetic);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* CONTENEDOR DE ASIGNATURAS */
+        .grid-asignaturas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1100px;
+            padding: 10px;
+        }
+
+        /* TARJETAS AESTHETIC */
+        .tarjeta-materia {
+            background-color: var(--blanco);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px var(--sombra);
+            border: 1px solid rgba(219, 234, 254, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tarjeta-materia:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.15);
+        }
+
+        .icono-materia {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .tarjeta-materia h3 {
+            font-size: 1.3rem;
+            color: var(--azul-oscuro);
+            margin-bottom: 10px;
+        }
+
+        .tarjeta-materia p {
+            color: var(--azul-aesthetic);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        /* BOTONES */
+        .botones-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-chat {
+            background-color: var(--azul-pastel);
+            color: var(--azul-electrico);
+        }
+
+        .btn-chat:hover {
+            background-color: var(--azul-electrico);
+            color: var(--blanco);
+        }
+
+        .btn-test {
+            background-color: var(--azul-oscuro);
+            color: var(--blanco);
+        }
+
+        .btn-test:hover {
+            opacity: 0.9;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.2rem; }
+            .grid-asignaturas { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Edu<span>IA</span></h1>
+        <p>Tu tutor inteligente de Bachillerato. Explicaciones cortas, sencillas y herramientas de práctica diseñadas para ayudarte a superar cualquier dificultad.</p>
+    </header>
+
+    <main class="grid-asignaturas">
+        <!-- 1. MATEMÁTICAS CCSS -->
+        <div class="tarjeta-materia">
+            <div>
+                <span class="icono-materia">📊</span>
+                <h3>Matemáticas CCSS</h3>
+                <p>Domina la estadística, probabilidad, matrices y optimización de forma visual.</p>
+            </div>
+            <div class="botones-container">
+                <button class="btn btn-chat" onclick="irA('mates', 'chat')">💬 Chat IA</button>
+                <button class="btn btn-test" onclick="irA('mates', 'test')">📝 Tests</button>
+            </div>
+        </div>
+
+        <!-- 2. QUÍMICA -->
+        <div class="tarjeta-materia">
+            <div>
+                <span class="icono-materia">🧪</span>
+                <h3>Química</h3>
+                <p>Entiende la estructura atómica, la estequiometría y la formulación orgánica sin dramas.</p>
+            </div>
+            <div class="botones-container">
+                <button class="btn btn-chat" onclick="irA('quimica', 'chat')">💬 Chat IA</button>
+                <button class="btn btn-test" onclick="irA('quimica', 'test')">📝 Tests</button>
+            </div>
+        </div>
+
+        <!-- 3. BIOLOGÍA -->
+        <div class="tarjeta-materia">
+            <div>
+                <span class="icono-materia">🧬</span>
+                <h3>Biología</h3>
+                <p>Aprende de forma clara la célula, genética, metabolismo e inmunología.</p>
+            </div>
+            <div class="botones-container">
+                <button class="btn btn-chat" onclick="irA('biologia', 'chat')">💬 Chat IA</button>
+                <button class="btn btn-test" onclick="irA('biologia', 'test')">📝 Tests</button>
+            </div>
+        </div>
+
+        <!-- 4. PSICOLOGÍA -->
+        <div class="tarjeta-materia">
+            <div>
+                <span class="icono-materia">🧠</span>
+                <h3>Psicología</h3>
+                <p>Explora el comportamiento humano, los procesos cognitivos y las teorías principales.</p>
+            </div>
+            <div class="botones-container">
+                <button class="btn btn-chat" onclick="irA('psicologia', 'chat')">💬 Chat IA</button>
+                <button class="btn btn-test" onclick="irA('psicologia', 'test')">📝 Tests</button>
+            </div>
+        </div>
+
+        <!-- 5. CASTELLANO -->
+        <div class="tarjeta-materia">
+            <div>
+                <span class="icono-materia">📚</span>
+                <h3>Castellano y Lit.</h3>
+                <p>Sintaxis simplificada, comentarios de texto y las obras literarias clave.</p>
+            </div>
+            <div class="botones-container">
+                <button class="btn btn-chat" onclick="irA('castellano', 'chat')">💬 Chat IA</button>
+                <button class="btn btn-test" onclick="irA('castellano', 'test')">📝 Tests</button>
+            </div>
+        </div>
+
+        <!-- 6. CATALÁN -->
+        <div class="tarjeta-materia">
+            <div>
+                <span class="icono-materia">📖</span>
+                <h3>Catalán y Lit.</h3>
+                <p>Gramàtica, sintaxi i repàs de les lectures obligatòries de Batxillerat.</p>
+            </div>
+            <div class="botones-container">
+                <button class="btn btn-chat" onclick="irA('catalan', 'chat')">💬 Chat IA</button>
+                <button class="btn btn-test" onclick="irA('catalan', 'test')">📝 Tests</button>
+            </div>
+        </div>
+
+        <!-- 7. INGLÉS -->
+        <div class="tarjeta-materia">
+            <div>
+                <span class="icono-materia">🇬🇧</span>
+                <h3>Inglés</h3>
+                <p>Tiempos verbales, conectores esenciales y trucos para tus redacciones.</p>
+            </div>
+            <div class="botones-container">
+                <button class="btn btn-chat" onclick="irA('ingles', 'chat')">💬 Chat IA</button>
+                <button class="btn btn-test" onclick="irA('ingles', 'test')">📝 Tests</button>
+            </div>
+        </div>
+
+        <!-- 8. HISTORIA DE ESPAÑA -->
+        <div class="tarjeta-materia">
+            <div>
+                <span class="icono-materia">🏰</span>
+                <h3>Historia de España</h3>
+                <p>Ejes cronológicos simplificados y los acontecimientos políticos resumidos.</p>
+            </div>
+            <div class="botones-container">
+                <button class="btn btn-chat" onclick="irA('historia-espana', 'chat')">💬 Chat IA</button>
+                <button class="btn btn-test" onclick="irA('historia-espana', 'test')">📝 Tests</button>
+            </div>
+        </div>
+
+        <!-- 9. FILOSOFÍA -->
+        <div class="tarjeta-materia">
+            <div>
+                <span class="icono-materia">🏛️</span>
+                <h3>Hist. de la Filosofía</h3>
+                <p>Los autores clave desde Platón hasta Nietzsche explicados de forma humana.</p>
+            </div>
+            <div class="botones-container">
+                <button class="btn btn-chat" onclick="irA('filosofia', 'chat')">💬 Chat IA</button>
+                <button class="btn btn-test" onclick="irA('filosofia', 'test')">📝 Tests</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Esta función guarda qué asignatura y qué herramienta eligió el alumno antes de cambiar de página
+        function irA(asignatura, herramienta) {
+            localStorage.setItem('asignaturaActiva', asignatura);
+            if (herramienta === 'chat') {
