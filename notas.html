@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduIA - Mis Notas</title>
+    <style>
+        :root {
+            --bg-principal: #f0f4f8;
+            --azul-oscuro: #1e293b;
+            --azul-aesthetic: #64748b;
+            --azul-electrico: #3b82f6;
+            --azul-pastel: #dbeafe;
+            --blanco: #ffffff;
+            --sombra: rgba(148, 163, 184, 0.15);
+            --verde: #10b981;
+            --rojo: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-principal); color: var(--azul-oscuro); min-height: 100vh; padding: 20px; display: flex; flex-direction: column; }
+        
+        header {
+            background-color: var(--blanco); padding: 15px 20px; box-shadow: 0 4px 12px var(--sombra);
+            display: flex; justify-content: space-between; align-items: center; border-radius: 15px;
+            max-width: 800px; width: 100%; margin: 0 auto 20px auto;
+        }
+
+        .btn-volver {
+            background-color: var(--azul-pastel); color: var(--azul-electrico); border: none;
+            padding: 8px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.9rem;
+        }
+
+        .container { max-width: 800px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+        
+        .card { background: var(--blanco); border-radius: 20px; padding: 25px; box-shadow: 0 10px 25px var(--sombra); border: 1px solid rgba(219,234,254,0.5); }
+        h3 { margin-bottom: 15px; color: var(--azul-oscuro); }
+
+        /* FORMULARIO AESTHETIC */
+        .form-grupo { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 15px; }
+        select, input { padding: 12px; border-radius: 10px; border: 1px solid rgba(148, 163, 184, 0.3); outline: none; font-size: 0.95rem; background: var(--bg-principal); color: var(--azul-oscuro); }
+        input[type="number"] { -moz-appearance: textfield; }
+        
+        .btn-guardar { background: var(--azul-electrico); color: var(--blanco); border: none; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.95rem; width: 100%; }
+        .btn-guardar:hover { opacity: 0.9; }
+
+        /* LISTA DE NOTAS */
+        .tabla-contenedor { overflow-x: auto; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 12px; border-bottom: 1px solid rgba(148,163,184,0.1); }
+        th { color: var(--azul-aesthetic); font-weight: 600; font-size: 0.9rem; }
+        
+        .nota-badge { font-weight: 700; padding: 4px 8px; border-radius: 6px; }
+        .nota-aprobado { background: #ecfdf5; color: var(--verde); }
+        .nota-suspenso { background: #fef2f2; color: var(--rojo); }
+
+        .btn-borrar { background: none; border: none; color: var(--rojo); cursor: pointer; font-size: 1.1rem; }
+        .media-box { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 15px; border-top: 2px dashed var(--azul-pastel); font-weight: bold; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="btn-volver">← Volver</a>
+        <h2>📝 Control de Calificaciones</h2>
+        <div style="width: 70px;"></div>
+    </header>
+
+    <div class="container">
+        <!-- FORMULARIO PARA AÑADIR -->
+        <div class="card">
+            <h3>Añadir Nota Nueva</h3>
+            <div class="form-grupo">
+                <select id="notaAsignatura">
+                    <option value="mates">📊 Matemáticas CCSS</option>
+                    <option value="quimica">🧪 Química</option>
+                    <option value="biologia">🧬 Biología</option>
+                    <option value="psicologia">🧠 Psicología</option>
+                    <option value="castellano">📚 Castellano y Lit.</option>
+                    <option value="catalan">📖 Catalán y Lit.</option>
+                    <option value="ingles">🇬🇧 Inglés</option>
+                    <option value="historia-espana">🏰 Historia de España</option>
+                    <option value="filosofia">🏛️ Filosofía</option>
+                </select>
+                <select id="notaTipo">
+                    <option value="Examen">📝 Examen</option>
+                    <option value="Trabajo">📁 Trabajo</option>
+                    <option value="Proyecto">🚀 Proyecto</option>
+                </select>
+                <input type="text" id="notaNombre" placeholder="Ej: Tema 1, Redacción...">
+                <input type="number" id="notaValor" placeholder="Nota (0-10)" min="0" max="10" step="0.1">
+            </div>
+            <button class="btn-guardar" onclick="agregarNota()">Guardar Nota ✨</button>
+        </div>
+
+        <!-- LISTADO Y RENDIMIENTO -->
+        <div class="card">
+            <h3>Mis Notas Registradas</h3>
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Asignatura</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                            <th>Nota</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaNotasBody">
+                        <!-- Se rellena con JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="media-box">
+                <span>Media General del Curso:</span>
+                <span id="mediaGeneral" style="color: var(--azul-electrico);">0.00</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const nombresAsignaturas = {
+            'mates': '📊 Matemáticas CCSS', 'quimica': '🧪 Química', 'biologia': '🧬 Biología',
+            'psicologia': '🧠 Psicología', 'castellano': '📚 Castellano', 'catalan': '📖 Catalán',
+            'ingles': '🇬🇧 Inglés', 'historia-espana': '🏰 Historia', 'filosofia': '🏛️ Filosofía'
+        };
+
+        let notas = JSON.parse(localStorage.getItem('misNotasCalificaciones')) || [];
+
+        function guardarEnLocalStorage() {
+            localStorage.setItem('misNotasCalificaciones', JSON.stringify(notas));
+            renderizarNotas();
+        }
+
+        function agregarNota() {
+            const asig = document.getElementById('notaAsignatura').value;
+            const tipo = document.getElementById('notaTipo').value;
+            const nombre = document.getElementById('notaNombre').value.trim() || 'Sin descripción';
+            const valor = parseFloat(document.getElementById('notaValor').value);
+
+            if (isNaN(valor) || valor < 0 || valor > 10) {
+                alert('Por favor, introduce una nota válida entre 0 y 10.');
+                return;
+            }
+
+            const nuevaNota = { id: Date.now(), asig, tipo, nombre, valor };
+            notas.push(nuevaNota);
+            
+            // Limpiar inputs
+            document.getElementById('notaNombre').value = '';
+            document.getElementById('notaValor').value = '';
+
+            guardarEnLocalStorage();
+        }
+
+        function borrarNota(id) {
+            notas = notas.filter(n => n.id !== id);
+            guardarEnLocalStorage();
+        }
+
+        function renderizarNotas() {
+            const tbody = document.getElementById('listaNotasBody');
+            tbody.innerHTML = '';
+            
+            if (notas.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--azul-aesthetic);">Aún no has guardado ninguna calificación. ¡Empieza a registrar tus éxitos!</td></tr>`;
+                document.getElementById('mediaGeneral').textContent = '0.00';
+                return;
+            }
+
+            let sumaTotal = 0;
+
+            notas.forEach(n => {
+                sumaTotal += n.valor;
+                const tr = document.createElement('tr');
+                const badgeClass = n.valor >= 5 ? 'nota-aprobado' : 'nota-suspenso';
+                
+                tr.innerHTML = `
+                    <td><b>${nombresAsignaturas[n.asig]}</b></td>
+                    <td>${n.tipo}</td>
+                    <td>${n.nombre}</td>
+                    <td><span class="nota-badge ${badgeClass}">${n.valor.toFixed(1)}</span></td>
+                    <td><button class="btn-borrar" onclick="borrarNota(${n.id})">🗑️</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            const media = sumaTotal / notas.length;
+            document.getElementById('mediaGeneral').textContent = media.toFixed(2);
+        }
+
+        // Cargar notas al iniciar
+        renderizarNotas();
+    </script>
+</body>
+</html>
