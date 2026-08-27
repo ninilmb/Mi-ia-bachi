@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduIA - Bachillerato Aesthetic</title>
     <style>
-        /* PALETA DE COLORES AZUL AESTHETIC */
         :root {
-            --bg-principal: #f0f4f8;       /* Azul grisáceo muy suave y limpio */
-            --azul-oscuro: #1e293b;        /* Azul medianoche para textos y títulos */
-            --azul-aesthetic: #64748b;     /* Azul apagado para subtítulos */
-            --azul-electrico: #3b82f6;     /* Azul vibrante para botones y acentos */
-            --azul-pastel: #dbeafe;        /* Azul cielo claro para fondos de tarjetas */
+            --bg-principal: #f0f4f8;       
+            --azul-oscuro: #1e293b;        
+            --azul-aesthetic: #64748b;     
+            --azul-electrico: #3b82f6;     
+            --azul-pastel: #dbeafe;        
             --blanco: #ffffff;
             --sombra: rgba(148, 163, 184, 0.15);
         }
@@ -33,7 +32,6 @@
             padding: 40px 20px;
         }
 
-        /* CABECERA */
         header {
             text-align: center;
             margin-bottom: 50px;
@@ -48,9 +46,7 @@
             margin-bottom: 10px;
         }
 
-        header h1 span {
-            color: var(--azul-electrico);
-        }
+        header h1 span { color: var(--azul-electrico); }
 
         header p {
             color: var(--azul-aesthetic);
@@ -58,7 +54,6 @@
             line-height: 1.6;
         }
 
-        /* CONTENEDOR DE ASIGNATURAS */
         .grid-asignaturas {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -68,7 +63,6 @@
             padding: 10px;
         }
 
-        /* TARJETAS AESTHETIC */
         .tarjeta-materia {
             background-color: var(--blanco);
             border-radius: 20px;
@@ -106,7 +100,6 @@
             flex-grow: 1;
         }
 
-        /* BOTONES */
         .botones-container {
             display: flex;
             gap: 10px;
@@ -140,11 +133,8 @@
             color: var(--blanco);
         }
 
-        .btn-test:hover {
-            opacity: 0.9;
-        }
+        .btn-test:hover { opacity: 0.9; }
 
-        /* RESPONSIVE */
         @media (max-width: 600px) {
             header h1 { font-size: 2.2rem; }
             .grid-asignaturas { grid-template-columns: 1fr; }
@@ -278,7 +268,15 @@
     </main>
 
     <script>
-        // Esta función guarda qué asignatura y qué herramienta eligió el alumno antes de cambiar de página
         function irA(asignatura, herramienta) {
             localStorage.setItem('asignaturaActiva', asignatura);
+            // El truco definitivo: forzar la ruta relativa directa
             if (herramienta === 'chat') {
+                window.location.href = './chat.html';
+            } else {
+                window.location.href = './test.html';
+            }
+        }
+    </script>
+</body>
+</html>
