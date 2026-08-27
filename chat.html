@@ -3,239 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduIA - Chat Inteligente de Bachillerato</title>
+    <title>EduIA - Chat</title>
     <style>
         :root {
-            --bg-principal: #f0f4f8;
-            --azul-oscuro: #1e293b;
-            --azul-aesthetic: #64748b;
-            --azul-electrico: #3b82f6;
-            --azul-pastel: #dbeafe;
-            --blanco: #ffffff;
-            --sombra: rgba(148, 163, 184, 0.15);
-            --verde-aesthetic: #10b981;
+            --bg: #f0f4f8; --text: #1e293b; --sub: #64748b;
+            --blue: #3b82f6; --pastel: #dbeafe; --white: #ffffff;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-principal);
-            color: var(--azul-oscuro);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        header {
-            background-color: var(--blanco);
-            padding: 15px 20px;
-            box-shadow: 0 4px 12px var(--sombra);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .btn-volver {
-            background-color: var(--azul-pastel);
-            color: var(--azul-electrico);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        header h2 { font-size: 1.2rem; color: var(--azul-oscuro); }
-
-        .chat-container {
-            flex: 1;
-            max-width: 800px;
-            width: 100%;
-            margin: 20px auto;
-            background-color: var(--blanco);
-            border-radius: 20px;
-            box-shadow: 0 10px 25px var(--sombra);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid rgba(219, 234, 254, 0.5);
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .message {
-            max-width: 75%;
-            padding: 12px 18px;
-            border-radius: 16px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            white-space: pre-line;
-        }
-
-        .message.bot {
-            background-color: var(--bg-principal);
-            color: var(--azul-oscuro);
-            align-self: flex-start;
-            border-top-left-radius: 4px;
-        }
-
-        .message.user {
-            background-color: var(--azul-electrico);
-            color: var(--blanco);
-            align-self: flex-end;
-            border-top-right-radius: 4px;
-        }
-
-        /* Vista previa de la foto subida en el chat */
-        .img-preview-chat {
-            max-width: 200px;
-            border-radius: 10px;
-            margin-top: 5px;
-            display: block;
-        }
-
-        .chat-input-area {
-            padding: 15px 20px;
-            background-color: var(--bg-principal);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-top: 1px solid rgba(219, 234, 254, 0.7);
-        }
-
-        /* Botón de la cámara ocultando el input real */
-        .btn-camara {
-            background-color: var(--azul-pastel);
-            color: var(--azul-electrico);
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            font-size: 1.3rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .btn-camara:hover {
-            background-color: var(--azul-electrico);
-            color: var(--blanco);
-        }
-
-        .chat-input-area input[type="text"] {
-            flex: 1;
-            padding: 14px;
-            border: 1px solid rgba(148, 163, 184, 0.3);
-            border-radius: 12px;
-            outline: none;
-            font-size: 0.95rem;
-            background-color: var(--blanco);
-        }
-
-        .chat-input-area button.btn-enviar {
-            background-color: var(--azul-oscuro);
-            color: var(--blanco);
-            border: none;
-            padding: 14px 22px;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, sans-serif; }
+        body { background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; }
+        header { background: var(--white); padding: 15px; box-shadow: 0 4px 12px rgba(148,163,184,0.15); display: flex; justify-content: space-between; align-items: center; }
+        .btn-volver { background: var(--pastel); color: var(--blue); border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }
+        .chat-container { flex: 1; max-width: 800px; width: 100%; margin: 15px auto; background: var(--white); border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(219,234,254,0.5); }
+        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .message { max-width: 75%; padding: 12px 18px; border-radius: 16px; font-size: 0.95rem; line-height: 1.5; white-space: pre-line; }
+        .message.bot { background: var(--bg); color: var(--text); align-self: flex-start; border-top-left-radius: 4px; }
+        .message.user { background: var(--blue); color: var(--white); align-self: flex-end; border-top-right-radius: 4px; }
+        .img-preview-chat { max-width: 180px; border-radius: 10px; margin-top: 5px; display: block; }
+        .chat-input-area { padding: 15px; background: var(--bg); display: flex; align-items: center; gap: 10px; }
+        .btn-camara { background: var(--pastel); color: var(--blue); width: 45px; height: 45px; border-radius: 12px; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .chat-input-area input[type="text"] { flex: 1; padding: 14px; border: 1px solid rgba(148,163,184,0.3); border-radius: 12px; outline: none; background: var(--white); }
+        .btn-enviar { background: var(--text); color: var(--white); border: none; padding: 14px 22px; border-radius: 12px; font-weight: 600; cursor: pointer; }
     </style>
 </head>
 <body>
-
     <header>
         <a href="index.html" class="btn-volver">← Volver</a>
-        <h2 id="titulo-asignatura">Cargando Tutor...</h2>
+        <h2 id="titulo-asignatura">Tutor</h2>
         <div style="width: 70px;"></div>
     </header>
-
     <div class="chat-container">
         <div class="chat-messages" id="chatBox"></div>
         <div class="chat-input-area">
-            <!-- Botón de Cámara que activa el lector oculto -->
             <label class="btn-camara" for="fileInput">📸</label>
             <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="procesarFoto(event)">
-            
-            <input type="text" id="userInput" placeholder="Pregúntame una duda o sube una foto..." onkeypress="detectarEnter(event)">
+            <input type="text" id="userInput" placeholder="Pregúntame o sube una foto..." onkeypress="detectarEnter(event)">
             <button class="btn-enviar" onclick="enviarMensaje()">Enviar</button>
         </div>
     </div>
-
     <script>
-        const nombresAsignaturas = {
-            'mates': '📊 Matemáticas CCSS', 'quimica': '🧪 Química', 'biologia': '🧬 Biología',
-            'psicologia': '🧠 Psicología', 'castellano': '📚 Castellano y Lit.', 'catalan': '📖 Catalán y Lit.',
-            'ingles': '🇬🇧 Inglés', 'historia-espana': '🏰 Historia de España', 'filosofia': '🏛️ Filosofía'
-        };
-
-        const respuestasSaludos = [
-            "¡Hola! Qué alegría tenerte por aquí. Vamos a darle caña al estudio de forma relajada. ¿Qué concepto vemos hoy? ✨",
+        const nombres = { 'mates': '📊 Matemáticas CCSS', 'quimica': '🧪 Química', 'biologia': '🧬 Biología', 'psicologia': '🧠 Psicología', 'castellano': '📚 Castellano', 'catalan': '📖 Catalán', 'ingles': '🇬🇧 Inglés', 'historia-espana': '🏰 Historia', 'filosofia': '🏛️ Filosofía' };
+        const saludos = [
+            "¡Hola! Qué alegría tenerte por aquí. Vamos a darle caña al estudio relajados. ¿Qué vemos hoy? ✨",
             "¡Buenas! Menudo mérito tienes hincando los codos. Cuéntame tu duda y la resolvemos sin dramas. 🤝",
-            "¡Hola, hola! Ponte cómodo/a en tu zona de estudio. ¿Qué ejercicio o teoría te está costando más? 🚀"
+            "¡Hola, hola! Ponte cómodo/a en tu zona de estudio. ¿Qué te está costando más? 🚀"
         ];
-
-        // BASE DE DATOS MATEMÁTICA Y GENERAL EXPANDIDA
         const respuestasIA = {
             'mates': {
-                'derivada': "¡Las derivadas son preciosas! Imagina que vas en coche: el velocímetro te dice tu velocidad en un instante exacto. Eso es la derivada: la rapidez con la que cambia una función en un punto concreto.\n\n📌 *Regla básica:* Si tienes x², su derivada es 2x. ¡Solo bajas el exponente multiplicando!",
-                'matriz': "Una matriz es una caja organizada con filas y columnas llena de números. Piensa en ella como una tabla de datos inteligente.\n\n📌 *Para Selectividad:* Te pedirán calcular la Inversa (A⁻¹) o usar el Método de Cramer para sistemas de ecuaciones. ¡Es mecánico, si practicas el orden lo tienes asegurado!",
-                'probabilidad': "La probabilidad mide las opciones de que algo ocurra.\n\n📌 *Truco de Bachillerato:* Grábate a fuego la Regla de Laplace: Casos favorables partidos por Casos posibles. Si es un problema complejo, haz un diagrama de árbol, ¡te salvará la vida!",
-                'estadistica': "En ciencias sociales se centra en intervalos de confianza y muestreo.\n\n📌 *Secreto:* Siempre te pedirán la media muestral o estimar una proporción. Usa la fórmula de Zα/2 (el nivel de confianza) y el resto es usar la calculadora con cuidado.",
-                'limite': "Un límite es ver a qué valor se acerca una función cuando la 'x' se aproxima a un número. Si te da una indeterminación como 0/0, ¡aplica la Regla de L'Hôpital derivando arriba y abajo!",
-                'default': "¡Qué buena pregunta matemática! Como tutor local, domino conceptos clave de Bachillerato como derivadas, matrices, límites, probabilidad y estadística. ¿Cuál de estos te apetece que desengranemos de manera súper amigable hoy?"
+                'derivada': "¡Las derivadas son clave! Indican la rapidez con la que cambia una función en un punto concreto.\n\n📌 *Regla básica:* Si tienes x², su derivada es 2x. ¡Solo bajas el exponente multiplicando!",
+                'matriz': "Una matriz es una caja organizada con filas y columnas llena de números. Piensa en ella como una tabla de datos inteligente.\n\n📌 *Para Selectividad:* Te pedirán calcular la Inversa (A⁻¹) o usar el Método de Cramer. ¡Es muy mecánico!",
+                'probabilidad': "Mide las opciones de que algo ocurra.\n\n📌 *Truco:* Aplica la Regla de Laplace (Casos favorables / Casos posibles). Si te cuesta ver el problema, haz un diagrama de árbol.",
+                'estadistica': "Se centra en intervalos de confianza.\n\n📌 *Secreto:* Usa la fórmula de Zα/2 para el nivel de confianza y opera con cuidado en la calculadora.",
+                'limite': "Un límite es ver a qué valor se acerca una función. Si te da una indeterminación como 0/0, ¡aplica la Regla de L'Hôpital derivando arriba y abajo!",
+                'default': "¡Gran duda matemática! Domino derivadas, matrices, límites, probabilidad y estadística. ¿Cuál de estos repasamos de forma amigable hoy?"
             },
             'quimica': {
                 'atomo': 'El átomo es la pieza fundamental de la materia. Tiene un núcleo positivo en el centro y electrones orbitando alrededor.',
                 'enlace': 'Un enlace es la unión entre átomos para conseguir estabilidad química.',
-                'default': "¡Excelente duda de Química! Recuerda que puedes preguntarme sobre el 'atomo' o los 'enlaces' químicos por ahora."
+                'default': "¡Buena duda de Química! Puedes preguntarme sobre el 'atomo' o los 'enlaces' químicos por ahora."
             }
         };
 
-        const asignaturaActiva = localStorage.getItem('asignaturaActiva') || 'mates';
-        document.getElementById('titulo-asignatura').textContent = nombresAsignaturas[asignaturaActiva] || 'Tutor de IA';
-
+        const activeAsig = localStorage.getItem('asignaturaActiva') || 'mates';
+        document.getElementById('titulo-asignatura').textContent = nombres[activeAsig] || 'Tutor de IA';
         const chatBox = document.getElementById('chatBox');
         const userInput = document.getElementById('userInput');
 
-        function bienvenida() {
-            agregarGlobo('✨ ¡Hola! Ya estamos en tu zona de estudio. Soy tu tutor personal de Bachillerato. Ahora puedes escribirme tus dudas matemáticas complejas o incluso pulsar el botón de la cámara 📸 para enviarme una foto de tu ejercicio. ¡Vamos a por ello!', 'bot');
+        function globo(txt, emisor) {
+            const g = document.createElement('div'); g.classList.add('message', emisor); g.textContent = txt;
+            chatBox.appendChild(g); chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        function agregarGlobo(texto, emisor) {
-            const globo = document.createElement('div');
-            globo.classList.add('message', emisor);
-            globo.textContent = texto;
-            chatBox.appendChild(globo);
-            chatBox.scrollTop = chatBox.scrollHeight;
+        function procesarFoto(e) {
+            const file = e.target.files[0]; if (!file) return;
+            const r = new FileReader();
+            r.onload = function(evt) {
+                const gUser = document.createElement('div'); gUser.classList.add('message', 'user');
+                gUser.innerHTML = `📸 Imagen enviada:<br><img src="${evt.target.result}" class="img-preview-chat">`;
+                chatBox.appendChild(gUser); chatBox.scrollTop = chatBox.scrollHeight;
+                setTimeout(() => { globo("🤖 [Análisis Visual] ¡Veo tu ejercicio! Sigue estos pasos:\n1. Identifica los datos del enunciado.\n2. Aplica la fórmula principal paso a paso.\n3. Ojo con los signos al despejar.\n\n¿Quieres escribirme la ecuación para que la revisemos juntos?", "bot"); }, 1000);
+            };
+            r.readAsDataURL(file);
         }
 
-        // LÓGICA DE FOTOS MULTIMEDIA
-        function procesarFoto(event) {
-            const archivo = event.target.files[0];
-            if (!archivo) return;
-
-            // Mostrar la imagen que subió el alumno en la caja de chat
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const globoUsuario = document.createElement('div');
-                globoUsuario.classList.add('message', 'user');
-                globoUsuario.innerHTML = `📸 Has enviado una imagen:<br><img src="${e.target.result}" class="img-preview-chat">`;
-                chatBox.appendChild(globoUsuario);
+        function enviarMensaje() {
+            const txt = userInput.value.trim(); if (txt === '') return;
+            globo(txt, 'user'); userInput.value = '';
+            setTimeout(() => {
+                const clean = txt.toLowerCase(); let res = '';
+                const greets = ['hola', 'buenas', 'que tal', 'cómo estás', 'como estas'];
+                if (greets.some(g => clean.startsWith(g) || clean === g)) {
+                    res = saludos[Math.floor(Math.random() * saludos.length)];
+                } else {
+                    const base = respuestasIA[activeAsig] || { 'default': '¡Qué buen interés! Estoy ampliando mis apuntes para esta materia.' };
+                    let found = false;
+                    for (let c in base) { if (clean.includes(c) && c !== 'default') { res = base[c]; found = true; break; } }
+                    if (!found) res = base['default'];
+                }
+                globo(res, 'bot');
+            }, 500);
+        }
+        function detectarEnter(e) { if (e.key === 'Enter') enviarMensaje(); }
+        globo('✨ ¡Hola! Ya estamos en tu zona de estudio. Soy tu tutor personal. Dime qué concepto se te resiste o pulsa 📸 para mandarme una foto de tu ejercicio. ¡Tú puedes!', 'bot');
+    </script>
+</body>
+</html>
